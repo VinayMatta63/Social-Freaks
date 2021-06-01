@@ -2,21 +2,26 @@ import Image from "next/image";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
 import {
+  ExpandMore,
   Flag,
   Home,
+  NotificationsRounded,
   People,
   PlayArrow,
   ShoppingCart,
+  Sms,
 } from "@material-ui/icons";
 import NavIcon from "./NavIcon";
-const Header = ({ deviceType }) => {
+import { IconButton } from "@material-ui/core";
+import { signout } from "next-auth/client";
+const Header = () => {
   return (
     <Container>
       <Logo>
         <Image
-          src="https://links.papareact.com/5me"
-          width={40}
-          height={40}
+          src="https://res.cloudinary.com/dpnapmmwm/image/upload/v1622458967/Others/Social_Freaks-logos--_ljd13h.jpg"
+          width={60}
+          height={60}
           layout="fixed"
         />
         <InputBox>
@@ -35,7 +40,18 @@ const Header = ({ deviceType }) => {
 
       <Icons>
         {/* <Image src="" width="" height="" layout="" /> */}
-        <p>Vinay Matta</p>
+        <Name onClick={signout}>Vinay Matta</Name>
+        <IconBox>
+          <IconButton>
+            <Sms style={{ color: "lightgray" }} />
+          </IconButton>
+          <IconButton>
+            <NotificationsRounded style={{ color: "lightgray" }} />
+          </IconButton>
+          <IconButton>
+            <ExpandMore style={{ color: "lightgray" }} />
+          </IconButton>
+        </IconBox>
       </Icons>
     </Container>
   );
@@ -73,8 +89,10 @@ const NavBox = styled.div`
 const Input = styled.input`
   border: none;
   outline: none;
-
   font-size: 12px;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 const InputBox = styled.div`
   background-color: #fff;
@@ -85,5 +103,22 @@ const InputBox = styled.div`
   border-radius: 50px;
   padding: 3px;
 `;
+const Icons = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const Name = styled.p`
+  font-weight: 500;
+  font-size: 18px;
+  padding-right: 15px;
+  @media (max-width: 500px) {
+    padding-right: 5px;
+    font-size: 15px;
+  }
+`;
 
-const Icons = styled.div``;
+const IconBox = styled.div`
+  @media (max-width: 868px) {
+    display: none;
+  }
+`;

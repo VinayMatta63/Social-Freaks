@@ -3,7 +3,7 @@ import styled from "styled-components";
 const NavIcon = ({ Icon }) => {
   return (
     <Container>
-      <Icon style={{ fontSize: "27px" }} />
+      <Icon style={{ fontSize: "25px" }} />
     </Container>
   );
 };
@@ -25,5 +25,8 @@ const Container = styled.div`
   :hover {
     color: #58ffd5;
     background-color: lightgray;
+  }
+  @media (max-width: 768px) {
+    padding: 0 8px;
   }
 `;
