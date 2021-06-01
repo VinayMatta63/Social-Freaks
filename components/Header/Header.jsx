@@ -13,12 +13,15 @@ import {
 } from "@material-ui/icons";
 import NavIcon from "./NavIcon";
 import { IconButton } from "@material-ui/core";
-import { signout } from "next-auth/client";
+import { signout, useSession } from "next-auth/client";
+import { useState } from "react";
 const Header = () => {
+  const [session] = useSession();
+  const [enter, setEnter] = useState();
   return (
     <Container>
       <Logo>
-        <Image
+        <Img
           src="https://res.cloudinary.com/dpnapmmwm/image/upload/v1622458967/Others/Social_Freaks-logos--_ljd13h.jpg"
           width={60}
           height={60}
@@ -39,8 +42,24 @@ const Header = () => {
       </NavBox>
 
       <Icons>
-        {/* <Image src="" width="" height="" layout="" /> */}
-        <Name onClick={signout}>Vinay Matta</Name>
+        <Img src={session.user.image} width={50} height={50} layout="fixed" />
+        <User>
+          <Name
+            onMouseEnter={() => setEnter(true)}
+            enter={enter}
+            onClick={() => setEnter(!enter)}
+          >
+            {session.user.name}
+          </Name>
+          <Signout
+            onClick={signout}
+            enter={enter}
+            onMouseLeave={() => setEnter(false)}
+          >
+            Signout
+          </Signout>
+        </User>
+
         <IconBox>
           <IconButton>
             <Sms style={{ color: "lightgray" }} />
@@ -66,8 +85,7 @@ const Container = styled.div`
   height: 10vh;
   position: sticky;
   z-index: 101;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
-    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  box-shadow: rgba(0, 0, 0, 0.205) 0px 4px 6px -2px;
 `;
 
 const Logo = styled.div`
@@ -110,15 +128,44 @@ const Icons = styled.div`
 const Name = styled.p`
   font-weight: 500;
   font-size: 18px;
+  padding: 0;
   padding-right: 15px;
+  margin-left: 5px;
+  z-index: 10;
+  color: #048604;
   @media (max-width: 500px) {
     padding-right: 5px;
     font-size: 15px;
   }
+  transition-duration: 0.3s;
+  ${(props) => props.enter && "transform:translateY(-15px);"}
 `;
 
 const IconBox = styled.div`
   @media (max-width: 868px) {
     display: none;
   }
+`;
+
+const User = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Signout = styled.span`
+  position: absolute;
+  cursor: pointer;
+  background-color: #4bdab6;
+  padding: 3px 12px;
+  border-radius: 10px;
+  color: white;
+  font-weight: 500;
+  transition-duration: 0.3s;
+  visibility: hidden;
+  ${(props) => props.enter && "transform:translateY(10px);visibility:visible;"};
+`;
+
+const Img = styled(Image)`
+  border-radius: 50%;
 `;
