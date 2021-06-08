@@ -6,8 +6,9 @@ import Header from "../components/Header/Header";
 import Login from "../components/Login";
 import Sidebar from "../components/Sidebar";
 import Widgets from "../components/Widgets";
+import { db } from "../firebase";
 
-export default function Home({ session }) {
+export default function Home({ session, posts }) {
   if (!session) {
     return <Login />;
   }
@@ -21,7 +22,7 @@ export default function Home({ session }) {
       <Header />
       <Main>
         <Sidebar />
-        <Feed />
+        <Feed posts={posts} />
         <Widgets />
       </Main>
     </Container>
@@ -30,7 +31,13 @@ export default function Home({ session }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  return { props: { session } };
+  const posts = await db.collection("posts").orderBy("timestamp", "desc").get();
+  const docs = posts.docs.map((post) => ({
+    id: post.id,
+    ...post.data(),
+    timestamp: null,
+  }));
+  return { props: { session, posts: docs } };
 }
 
 const Container = styled.div`

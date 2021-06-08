@@ -35,15 +35,19 @@ const InputBox = () => {
         name: session.user.name,
         email: session.user.email,
         image: session.user.image,
+        message: inputRef.current.value ? inputRef.current.value : "",
         activity: activity ? activity : "",
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
       .then((doc) => {
+        if (activity) {
+          removeActivity();
+        }
         if (imageForPost) {
           const uploadTask = storage
             .ref(`posts/${doc.id}`)
             .putString(imageForPost, "data_url");
-          removeActivity();
+
           removeImage();
           uploadTask.on(
             "state_change",

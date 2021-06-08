@@ -21,7 +21,7 @@ const StoryCard = ({ data }) => {
 export default StoryCard;
 
 const Container = styled.div`
-  height: 27vh;
+  height: 30vh;
   width: 10vw;
   flex-shrink: 0;
   position: relative;
