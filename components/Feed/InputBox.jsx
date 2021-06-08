@@ -1,13 +1,73 @@
 import { CameraAlt, EmojiEmotions, Videocam } from "@material-ui/icons";
 import { useSession } from "next-auth/client";
 import Image from "next/image";
+import { useRef, useState } from "react";
 import styled from "styled-components";
+import firebase from "firebase";
+import { db, storage } from "../../firebase";
+import { Tooltip } from "@material-ui/core";
 
 const InputBox = () => {
-  const sendPost = (e) => {
-    e.preventDefault();
-  };
   const [session] = useSession();
+  const [imageForPost, setImageforPost] = useState(null);
+  const inputRef = useRef(null);
+  const imgRef = useRef(null);
+  const sendPost = async (e) => {
+    e.preventDefault();
+    if (!inputRef.current.value) return;
+    await db
+      .collection("posts")
+      .add({
+        name: session.user.name,
+        email: session.user.email,
+        image: session.user.image,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      })
+      .then((doc) => {
+        if (imageForPost) {
+          const uploadTask = storage
+            .ref(`posts/${doc.id}`)
+            .putString(imageForPost, "data_url");
+          removeImage();
+          uploadTask.on(
+            "state_change",
+            null,
+            (error) => {
+              console.error(error);
+            },
+            () => {
+              storage
+                .ref("posts")
+                .child(doc.id)
+                .getDownloadURL()
+                .then((url) => {
+                  db.collection("posts").doc(doc.id).set(
+                    {
+                      postImage: url,
+                    },
+                    { merge: true }
+                  );
+                });
+            }
+          );
+        }
+      });
+    inputRef.current.value = "";
+  };
+
+  const addImage = (e) => {
+    const reader = new FileReader();
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    reader.onload = (rE) => {
+      setImageforPost(rE.target.result);
+    };
+  };
+
+  const removeImage = () => {
+    setImageforPost(null);
+  };
   return (
     <Container>
       <Status>
@@ -15,19 +75,28 @@ const InputBox = () => {
         <Form>
           <Input
             placeholder={`What's on your mind, ${session.user.name}?`}
+            ref={inputRef}
             type="text"
           />
           <Submit onClick={(e) => sendPost(e)}>Submit</Submit>
         </Form>
+        {imageForPost && (
+          <Tooltip title="Remove" arrow>
+            <div onClick={removeImage}>
+              <PreviewImage src={imageForPost} alt="" />
+            </div>
+          </Tooltip>
+        )}
       </Status>
       <Buttons>
         <Button type="live">
           <Videocam />
           <ButtonTitle>Live Video</ButtonTitle>
         </Button>
-        <Button type="upload">
+        <Button onClick={() => imgRef.current.click()} type="upload">
           <CameraAlt />
           <ButtonTitle>Photo / Video</ButtonTitle>
+          <input ref={imgRef} onChange={addImage} type="file" hidden />
         </Button>
         <Button type="activity">
           <EmojiEmotions />
@@ -112,4 +181,10 @@ const Button = styled.div`
 
 const ButtonTitle = styled.span`
   margin-left: 10px;
+`;
+
+const PreviewImage = styled.img`
+  height: 40px;
+  object-fit: contain;
+  cursor: pointer;
 `;

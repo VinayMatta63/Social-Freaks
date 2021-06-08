@@ -11,9 +11,12 @@ const firebaseConfig = {
   measurementId: "G-91PF9E4W6G",
 };
 
-const app = !firebase.app.length
-  ? firebase.initializeApp(firebaseConfig)
-  : firebase.app();
+let app = null;
+if (!firebase.apps.length) {
+  app = firebase.initializeApp(firebaseConfig);
+} else {
+  app = firebase.app(); // if already initialized, use that one
+}
 
 const db = app.firestore();
 const storage = firebase.storage();
