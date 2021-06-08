@@ -4,14 +4,28 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import firebase from "firebase";
-import { db, storage } from "../../firebase";
-import { Tooltip } from "@material-ui/core";
+import { db, storage } from "../../../firebase";
+import { Menu, MenuItem, Tooltip } from "@material-ui/core";
+import { activityArray } from "./activity";
 
 const InputBox = () => {
   const [session] = useSession();
   const [imageForPost, setImageforPost] = useState(null);
+  const [activity, setActivity] = useState(null);
   const inputRef = useRef(null);
   const imgRef = useRef(null);
+  const vidRef = useRef(null);
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (activity) => {
+    setActivity(activity);
+    setAnchorEl(null);
+  };
   const sendPost = async (e) => {
     e.preventDefault();
     if (!inputRef.current.value) return;
@@ -21,6 +35,7 @@ const InputBox = () => {
         name: session.user.name,
         email: session.user.email,
         image: session.user.image,
+        activity: activity ? activity : "",
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
       .then((doc) => {
@@ -28,6 +43,7 @@ const InputBox = () => {
           const uploadTask = storage
             .ref(`posts/${doc.id}`)
             .putString(imageForPost, "data_url");
+          removeActivity();
           removeImage();
           uploadTask.on(
             "state_change",
@@ -68,6 +84,9 @@ const InputBox = () => {
   const removeImage = () => {
     setImageforPost(null);
   };
+  const removeActivity = () => {
+    setActivity(null);
+  };
   return (
     <Container>
       <Status>
@@ -80,6 +99,13 @@ const InputBox = () => {
           />
           <Submit onClick={(e) => sendPost(e)}>Submit</Submit>
         </Form>
+        {activity && (
+          <Tooltip title="Remove" arrow>
+            <div onClick={removeActivity}>
+              <Activity>{activity}</Activity>
+            </div>
+          </Tooltip>
+        )}
         {imageForPost && (
           <Tooltip title="Remove" arrow>
             <div onClick={removeImage}>
@@ -91,17 +117,29 @@ const InputBox = () => {
       <Buttons>
         <Button type="live">
           <Videocam />
-          <ButtonTitle>Live Video</ButtonTitle>
+          <ButtonTitle>Video</ButtonTitle>
         </Button>
         <Button onClick={() => imgRef.current.click()} type="upload">
           <CameraAlt />
-          <ButtonTitle>Photo / Video</ButtonTitle>
+          <ButtonTitle>Photo</ButtonTitle>
           <input ref={imgRef} onChange={addImage} type="file" hidden />
         </Button>
-        <Button type="activity">
+        <Button type="activity" onClick={handleClick}>
           <EmojiEmotions />
           <ButtonTitle>Feeling / Activity</ButtonTitle>
         </Button>
+        <Menu
+          anchorEl={anchorEl}
+          // keepMounted
+          open={Boolean(anchorEl)}
+          onClose={() => setAnchorEl(null)}
+        >
+          {activityArray.map((activity, index) => (
+            <MenuItem onClick={() => handleClose(activity)} key={index}>
+              {activity}
+            </MenuItem>
+          ))}
+        </Menu>
       </Buttons>
     </Container>
   );
@@ -124,6 +162,7 @@ const Status = styled.div`
   display: flex;
   padding: 15px;
   border-bottom: 1px solid lightgray;
+  align-items: center;
 `;
 const Img = styled(Image)`
   border-radius: 50%;
@@ -187,4 +226,13 @@ const PreviewImage = styled.img`
   height: 40px;
   object-fit: contain;
   cursor: pointer;
+`;
+
+const Activity = styled.span`
+  cursor: pointer;
+  padding: 5px;
+  background-color: gray;
+  border-radius: 10px;
+  color: white;
+  margin-right: 5px;
 `;

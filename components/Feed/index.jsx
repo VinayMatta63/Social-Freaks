@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import InputBox from "./InputBox";
-import Stories from "./Stories/Stories";
+import Posts from "./Posts";
+import Stories from "./Stories";
 
 const Feed = () => {
   return (
     <Container>
       <Stories />
       <InputBox />
+      <Posts />
     </Container>
   );
 };

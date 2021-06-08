@@ -35,6 +35,7 @@ const Header = () => {
 
       <NavBox>
         <NavIcon Icon={Home} />
+
         <NavIcon Icon={Flag} />
         <NavIcon Icon={PlayArrow} />
         <NavIcon Icon={ShoppingCart} />
