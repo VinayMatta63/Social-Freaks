@@ -28,7 +28,8 @@ const Container = styled.div`
   border-radius: 10px;
   padding: 10px 20px;
   @media (max-width: 768px) {
-    margin: 1rem 0.5rem;
+    margin: 0;
+    padding: 10px;
     width: max-content;
   }
   :hover {

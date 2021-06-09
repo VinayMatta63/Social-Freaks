@@ -16,4 +16,8 @@ const Feed = ({ posts }) => {
 export default Feed;
 const Container = styled.div`
   max-width: 45vw;
+  @media (max-width: 768px) {
+    padding-right: 10px;
+    max-width: 85%;
+  }
 `;

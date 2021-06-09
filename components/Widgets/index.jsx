@@ -39,6 +39,9 @@ export default Widgets;
 
 const Container = styled.div`
   flex: 0.2;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 const WidgetHeader = styled.div`
   display: flex;

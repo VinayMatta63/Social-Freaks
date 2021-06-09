@@ -170,6 +170,9 @@ const Status = styled.div`
 `;
 const Img = styled(Image)`
   border-radius: 50%;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 const Input = styled.input`
   font-size: 17px;
@@ -178,6 +181,11 @@ const Input = styled.input`
   outline: none;
   border: none;
   padding-left: 15px;
+  @media (max-width: 768px) {
+    font-size: 13px;
+    padding-left: 5px;
+    margin: 0;
+  }
 `;
 
 const Form = styled.form`
@@ -224,6 +232,9 @@ const Button = styled.div`
 
 const ButtonTitle = styled.span`
   margin-left: 10px;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const PreviewImage = styled.img`

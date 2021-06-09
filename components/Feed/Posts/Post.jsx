@@ -120,4 +120,7 @@ const Activity = styled.span`
 
 const ButtonText = styled.span`
   padding-left: 5px;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;

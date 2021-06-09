@@ -3,8 +3,10 @@ import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
 import {
   ExpandMore,
+  FavoriteSharp,
   Flag,
   Home,
+  Menu,
   NotificationsRounded,
   People,
   PlayArrow,
@@ -12,12 +14,24 @@ import {
   Sms,
 } from "@material-ui/icons";
 import NavIcon from "./NavIcon";
-import { IconButton } from "@material-ui/core";
+import {
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@material-ui/core";
 import { signout, useSession } from "next-auth/client";
 import { useState } from "react";
+
 const Header = () => {
   const [session] = useSession();
+  const [open, setOpen] = useState(false);
   const [enter, setEnter] = useState();
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
   return (
     <Container>
       <Logo>
@@ -35,7 +49,6 @@ const Header = () => {
 
       <NavBox>
         <NavIcon Icon={Home} />
-
         <NavIcon Icon={Flag} />
         <NavIcon Icon={PlayArrow} />
         <NavIcon Icon={ShoppingCart} />
@@ -73,6 +86,27 @@ const Header = () => {
           </IconButton>
         </IconBox>
       </Icons>
+      <IconButton>
+        <Menu onClick={toggleDrawer} />
+      </IconButton>
+      <Drawer anchor={"bottom"} open={open} onClose={toggleDrawer}>
+        <div
+          role="presentation"
+          onClick={toggleDrawer}
+          onKeyDown={toggleDrawer}
+        >
+          <List>
+            {["All mail", "Trash", "Spam"].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <Menu /> : <FavoriteSharp />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+        </div>
+      </Drawer>
     </Container>
   );
 };
@@ -103,6 +137,9 @@ const NavBox = styled.div`
   flex: 1;
   justify-content: space-evenly;
   align-items: center;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const Input = styled.input`
@@ -125,6 +162,9 @@ const InputBox = styled.div`
 const Icons = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 768px) {
+    margin-left: 20px;
+  }
 `;
 const Name = styled.p`
   font-weight: 500;
