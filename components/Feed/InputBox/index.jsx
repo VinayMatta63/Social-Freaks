@@ -112,10 +112,6 @@ const InputBox = () => {
     ) {
       alert("Please Enter Valid Image");
       return;
-    } else if (
-      !e.target.files[0] ||
-      !e.target.files[0].name.match(/\.(mp4|gif|GIF)$/)
-    ) {
     }
     const reader = new FileReader();
     if (e.target.files[0]) {

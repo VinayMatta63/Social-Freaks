@@ -118,7 +118,12 @@ const Post = ({
         </ImageCover>
       )}
       {postVideo && (
-        <video style={{ width: "100%", height: "300px" }} controls autoPlay>
+        <video
+          style={{ width: "100%", height: "300px" }}
+          controls
+          autoPlay
+          loop
+        >
           <source src={postVideo} />
         </video>
       )}
@@ -134,11 +139,13 @@ const Post = ({
           }
         >
           <Favorite />
-          <ButtonText>{likes?.docs.length} likes</ButtonText>
+          <ButtonText type="likes">{likes?.docs.length} likes</ButtonText>
         </FooterButton>
         <FooterButton onClick={getComments} clicked={commentBar}>
           <Comment />
-          <ButtonText>Comment</ButtonText>
+          <ButtonText type="comment">
+            {comments?.docs.length} <ButtonText> Comments</ButtonText>{" "}
+          </ButtonText>
         </FooterButton>
         <FooterButton>
           <Share />
@@ -266,6 +273,7 @@ const ButtonText = styled.span`
   padding-left: 5px;
   @media (max-width: 768px) {
     display: none;
+    ${(props) => props.type && "display:inline"}
   }
 `;
 const CommentBar = styled.form`
