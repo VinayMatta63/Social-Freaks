@@ -19,14 +19,17 @@ const StoryCard = ({ data }) => {
   return (
     <OuterContainer>
       <Container onClick={handleOpen}>
-        <Profile
-          src={data.data().image}
-          height={40}
-          width={40}
-          layout="fixed"
-          objectFit="cover"
-        />
-        {data.data().type == "photo" ? (
+        {data.data().image && (
+          <Profile
+            src={data.data().image}
+            height={40}
+            width={40}
+            layout="fixed"
+            objectFit="cover"
+          />
+        )}
+
+        {data.data().type == "photo" && data.data().status ? (
           <Img src={data.data().status} layout="fill" />
         ) : (
           <PlayArrow
@@ -38,9 +41,6 @@ const StoryCard = ({ data }) => {
               color: "white",
             }}
           />
-          // <video style={{ width: "100%", height: "80%" }} controls autoPlay loop>
-          //   <source src={data.data().status} />
-          // </video>
         )}
       </Container>
       <Modal

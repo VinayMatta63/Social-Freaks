@@ -121,7 +121,7 @@ const Post = ({
         <video
           style={{ width: "100%", height: "300px" }}
           controls
-          autoPlay
+          // autoPlay
           loop
         >
           <source src={postVideo} />
