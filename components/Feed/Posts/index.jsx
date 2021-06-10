@@ -20,6 +20,7 @@ const Posts = ({ posts }) => {
               timestamp={post.data().timestamp}
               image={post.data().image}
               postImage={post.data().postImage}
+              postVideo={post.data().postVideo}
               activity={post.data().activity}
             />
           ))
@@ -33,6 +34,7 @@ const Posts = ({ posts }) => {
               timestamp={post.timestamp}
               image={post.image}
               postImage={post.postImage}
+              postVideo={post.postVideo}
               activity={post.activity}
             />
           ))}

@@ -23,6 +23,7 @@ const Post = ({
   timestamp,
   image,
   postImage,
+  postVideo,
   activity,
 }) => {
   const [session] = useSession();
@@ -115,6 +116,11 @@ const Post = ({
         <ImageCover>
           <Image src={postImage} objectFit="cover" layout="fill" />
         </ImageCover>
+      )}
+      {postVideo && (
+        <video style={{ width: "100%", height: "300px" }} controls autoPlay>
+          <source src={postVideo} />
+        </video>
       )}
       <PostFooter>
         <FooterButton
@@ -224,7 +230,7 @@ const Message = styled.p`
 `;
 const ImageCover = styled.div`
   position: relative;
-  height: 250px;
+  height: 300px;
 `;
 const PostFooter = styled.div`
   display: flex;
