@@ -1,8 +1,14 @@
-import { Comment, Favorite, Share } from "@material-ui/icons";
+import { IconButton } from "@material-ui/core";
+import { Comment, Favorite, Send, Share } from "@material-ui/icons";
+import { useSession } from "next-auth/client";
 import Image from "next/image";
+import { useRef, useState } from "react";
 import styled from "styled-components";
+import { db } from "../../../firebase";
+import firebase from "firebase";
 
 const Post = ({
+  id,
   name,
   message,
   email,
@@ -11,6 +17,55 @@ const Post = ({
   postImage,
   activity,
 }) => {
+  const [session] = useSession();
+  const [commentBar, setCommentBar] = useState(false);
+  const commentRef = useRef(null);
+
+  const sendComment = async (e) => {
+    e.preventDefault();
+    if (!commentRef.current.value) return;
+    await db.collection("posts").doc(id).collection("comments").add({
+      name: session.user.name,
+      email: session.user.email,
+      image: session.user.image,
+      comment: commentRef.current.value,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    //   .then((doc) => {
+    //     if (activity) {
+    //       removeActivity();
+    //     }
+    //     if (imageForPost) {
+    //       const uploadTask = storage
+    //         .ref(`posts/${doc.id}`)
+    //         .putString(imageForPost, "data_url");
+
+    //       removeImage();
+    //       uploadTask.on(
+    //         "state_change",
+    //         null,
+    //         (error) => {
+    //           console.error(error);
+    //         },
+    //         () => {
+    //           storage
+    //             .ref("posts")
+    //             .child(doc.id)
+    //             .getDownloadURL()
+    //             .then((url) => {
+    //               db.collection("posts").doc(doc.id).set(
+    //                 {
+    //                   postImage: url,
+    //                 },
+    //                 { merge: true }
+    //               );
+    //             });
+    //         }
+    //       );
+    //     }
+    //   });
+    commentRef.current.value = "";
+  };
   return (
     <Container>
       <PostHeader>
@@ -41,7 +96,7 @@ const Post = ({
           <Favorite />
           <ButtonText>Like</ButtonText>
         </FooterButton>
-        <FooterButton>
+        <FooterButton onClick={() => setCommentBar(!commentBar)}>
           <Comment />
           <ButtonText>Comment</ButtonText>
         </FooterButton>
@@ -50,6 +105,21 @@ const Post = ({
           <ButtonText>Share</ButtonText>
         </FooterButton>
       </PostFooter>
+      {commentBar && (
+        <CommentBar>
+          <InputComment
+            type="text"
+            ref={commentRef}
+            placeholder="Add Comment.."
+          />
+          <IconButton>
+            <Send
+              style={{ color: "#3fb497" }}
+              onClick={(e) => sendComment(e)}
+            />
+          </IconButton>
+        </CommentBar>
+      )}
     </Container>
   );
 };
@@ -123,4 +193,20 @@ const ButtonText = styled.span`
   @media (max-width: 768px) {
     display: none;
   }
+`;
+const CommentBar = styled.form`
+  display: flex;
+  border-top: 1px solid lightgray;
+  padding: 5px;
+  align-items: center;
+  justify-content: space-evenly;
+  box-sizing: border-box;
+`;
+
+const InputComment = styled.input`
+  flex: 0.6;
+  padding: 7px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid #3fb497;
 `;
