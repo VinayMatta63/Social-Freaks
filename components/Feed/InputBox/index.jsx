@@ -11,6 +11,8 @@ import { activityArray } from "./activity";
 const InputBox = () => {
   const [session] = useSession();
   const [imageForPost, setImageforPost] = useState(null);
+  const [videoForPost, setVideoforPost] = useState(null);
+
   const [activity, setActivity] = useState(null);
   const inputRef = useRef(null);
   const imgRef = useRef(null);
@@ -71,11 +73,46 @@ const InputBox = () => {
             }
           );
         }
+        if (videoForPost) {
+          const uploadTask = storage
+            .ref(`posts/${doc.id}`)
+            .putString(videoForPost, "data_url");
+
+          removeVideo();
+          uploadTask.on(
+            "state_change",
+            null,
+            (error) => {
+              console.error(error);
+            },
+            () => {
+              storage
+                .ref("posts")
+                .child(doc.id)
+                .getDownloadURL()
+                .then((url) => {
+                  db.collection("posts").doc(doc.id).set(
+                    {
+                      postVideo: url,
+                    },
+                    { merge: true }
+                  );
+                });
+            }
+          );
+        }
       });
     inputRef.current.value = "";
   };
 
   const addImage = (e) => {
+    if (
+      !e.target.files[0] ||
+      !e.target.files[0].name.match(/\.(jpg|jpeg|png|ico|PNG|JPG|JPEG)$/)
+    ) {
+      alert("Please Enter Valid Image");
+      return;
+    }
     const reader = new FileReader();
     if (e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
@@ -85,12 +122,32 @@ const InputBox = () => {
     };
   };
 
+  const addVideo = (e) => {
+    if (
+      !e.target.files[0] ||
+      !e.target.files[0].name.match(/\.(mp4|gif|GIF)$/)
+    ) {
+      alert("Please Enter Valid Video or GIF");
+      return;
+    }
+    const reader = new FileReader();
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    reader.onload = (rE) => {
+      setVideoforPost(rE.target.result);
+    };
+  };
   const removeImage = () => {
     setImageforPost(null);
+  };
+  const removeVideo = () => {
+    setVideoforPost(null);
   };
   const removeActivity = () => {
     setActivity(null);
   };
+
   return (
     <Container>
       <Status>
@@ -117,11 +174,21 @@ const InputBox = () => {
             </div>
           </Tooltip>
         )}
+        {videoForPost && (
+          <Tooltip title="Remove" arrow>
+            <div onClick={removeVideo}>
+              <video style={{ height: "40px", width: "40px" }}>
+                <source src={videoForPost} />
+              </video>
+            </div>
+          </Tooltip>
+        )}
       </Status>
       <Buttons>
-        <Button type="live">
+        <Button type="live" onClick={() => vidRef.current.click()}>
           <Videocam />
           <ButtonTitle>Video</ButtonTitle>
+          <input ref={vidRef} onChange={addVideo} type="file" hidden />
         </Button>
         <Button onClick={() => imgRef.current.click()} type="upload">
           <CameraAlt />

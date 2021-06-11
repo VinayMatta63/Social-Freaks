@@ -9,6 +9,7 @@ import {
   Menu,
   NotificationsRounded,
   People,
+  Person,
   PlayArrow,
   ShoppingCart,
   Sms,
@@ -86,26 +87,50 @@ const Header = () => {
           </IconButton>
         </IconBox>
       </Icons>
-      <IconButton>
-        <Menu onClick={toggleDrawer} />
-      </IconButton>
+      <Hamburger>
+        <IconButton onClick={toggleDrawer}>
+          <Menu />
+        </IconButton>
+      </Hamburger>
       <Drawer anchor={"bottom"} open={open} onClose={toggleDrawer}>
-        <div
+        <DrawerCover
           role="presentation"
           onClick={toggleDrawer}
           onKeyDown={toggleDrawer}
         >
           <List>
-            {["All mail", "Trash", "Spam"].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <Menu /> : <FavoriteSharp />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+            <ListItem button>
+              <ListItemIcon>
+                <Home />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <Person />
+              </ListItemIcon>
+              <ListItemText primary="Friends" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <People />
+              </ListItemIcon>
+              <ListItemText primary="Groups" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <ShoppingCart />
+              </ListItemIcon>
+              <ListItemText primary="Shop" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <PlayArrow />
+              </ListItemIcon>
+              <ListItemText primary="Watch" />
+            </ListItem>
           </List>
-        </div>
+        </DrawerCover>
       </Drawer>
     </Container>
   );
@@ -209,4 +234,15 @@ const Signout = styled.span`
 
 const Img = styled(Image)`
   border-radius: 50%;
+`;
+
+const DrawerCover = styled.div`
+  background-color: #3fb497;
+  color: #fafafa;
+`;
+
+const Hamburger = styled.span`
+  @media (min-width: 769px) {
+    display: none;
+  }
 `;

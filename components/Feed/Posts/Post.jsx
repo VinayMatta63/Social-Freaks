@@ -23,6 +23,7 @@ const Post = ({
   timestamp,
   image,
   postImage,
+  postVideo,
   activity,
 }) => {
   const [session] = useSession();
@@ -116,6 +117,16 @@ const Post = ({
           <Image src={postImage} objectFit="cover" layout="fill" />
         </ImageCover>
       )}
+      {postVideo && (
+        <video
+          style={{ width: "100%", height: "300px" }}
+          controls
+          // autoPlay
+          loop
+        >
+          <source src={postVideo} />
+        </video>
+      )}
       <PostFooter>
         <FooterButton
           onClick={likePost}
@@ -128,11 +139,13 @@ const Post = ({
           }
         >
           <Favorite />
-          <ButtonText>{likes?.docs.length} likes</ButtonText>
+          <ButtonText type="likes">{likes?.docs.length} likes</ButtonText>
         </FooterButton>
         <FooterButton onClick={getComments} clicked={commentBar}>
           <Comment />
-          <ButtonText>Comment</ButtonText>
+          <ButtonText type="comment">
+            {comments?.docs.length} <ButtonText> Comments</ButtonText>{" "}
+          </ButtonText>
         </FooterButton>
         <FooterButton>
           <Share />
@@ -224,7 +237,7 @@ const Message = styled.p`
 `;
 const ImageCover = styled.div`
   position: relative;
-  height: 250px;
+  height: 300px;
 `;
 const PostFooter = styled.div`
   display: flex;
@@ -260,6 +273,7 @@ const ButtonText = styled.span`
   padding-left: 5px;
   @media (max-width: 768px) {
     display: none;
+    ${(props) => props.type && "display:inline"}
   }
 `;
 const CommentBar = styled.form`

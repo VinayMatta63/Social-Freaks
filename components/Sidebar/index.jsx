@@ -31,4 +31,7 @@ export default Sidebar;
 
 const Container = styled.div`
   flex: 0.2;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
