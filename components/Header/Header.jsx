@@ -49,9 +49,9 @@ const Header = () => {
       </Logo>
 
       <NavBox>
-        <NavIcon Icon={Home} />
+        <NavIcon Icon={Home} route="" />
         <NavIcon Icon={Flag} />
-        <NavIcon Icon={PlayArrow} />
+        <NavIcon Icon={PlayArrow} route="watch" />
         <NavIcon Icon={ShoppingCart} />
         <NavIcon Icon={People} />
       </NavBox>

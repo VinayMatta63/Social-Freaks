@@ -10,8 +10,11 @@
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.58",
+    "axios": "^0.21.1",
     "babel-plugin-styled-components": "^1.12.0",
     "firebase": "^8.6.3",
+    "movie-trailer": "^2.1.0",
     "next": "10.2.0",
     "next-auth": "^3.24.0",
     "react": "17.0.2",

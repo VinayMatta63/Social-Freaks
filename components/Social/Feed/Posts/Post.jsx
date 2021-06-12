@@ -4,7 +4,7 @@ import { useSession } from "next-auth/client";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import { db } from "../../../firebase";
+import { db } from "../../../../firebase";
 import firebase from "firebase";
 import CommentComponent from "./CommentComponent";
 import { useCollection } from "react-firebase-hooks/firestore";

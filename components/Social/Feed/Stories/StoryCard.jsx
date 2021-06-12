@@ -30,7 +30,7 @@ const StoryCard = ({ data }) => {
         )}
 
         {data.data().type == "photo" && data.data().status ? (
-          <Img src={data.data().status} layout="fill" />
+          <Img outer={true} src={data.data().status} layout="fill" />
         ) : (
           <PlayArrow
             style={{
@@ -94,8 +94,8 @@ const Container = styled.div`
   z-index: 101;
   transition-duration: 0.3s;
   @media (max-width: 768px) {
-    height: 12vw;
-    width: 12vw;
+    height: 20vw;
+    width: 20vw;
     border-radius: 50%;
   }
   border-radius: 10px;
@@ -115,7 +115,7 @@ const Profile = styled(Image)`
 const Img = styled(Image)`
   border-radius: 10px;
   @media (max-width: 768px) {
-    border-radius: 50%;
+    ${(props) => props.outer && "border-radius: 50%;"}
   }
 `;
 

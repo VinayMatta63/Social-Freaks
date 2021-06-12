@@ -2,7 +2,7 @@ import { AddCircleOutline, Send } from "@material-ui/icons";
 import { useSession } from "next-auth/client";
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import { db, storage } from "../../../firebase";
+import { db, storage } from "../../../../firebase";
 import StoryCard from "./StoryCard";
 import firebase from "firebase";
 import { useCollection } from "react-firebase-hooks/firestore";
@@ -161,8 +161,8 @@ const AddStatus = styled.div`
   ${(props) => !props.status && "cursor: pointer;"}
 
   @media (max-width: 768px) {
-    height: 12vw;
-    width: 12vw;
+    height: 20vw;
+    width: 20vw;
     border-radius: 50%;
   }
   :hover {

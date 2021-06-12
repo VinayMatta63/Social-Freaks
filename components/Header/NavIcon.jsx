@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
-const NavIcon = ({ Icon }) => {
+const NavIcon = ({ Icon, route }) => {
+  const router = useRouter();
   return (
-    <Container>
+    <Container onClick={() => router.push(`/${route ? route : ""}`)}>
       <Icon style={{ fontSize: "25px" }} />
     </Container>
   );
