@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import firebase from "firebase";
-import { db, storage } from "../../../firebase";
+import { db, storage } from "../../../../firebase";
 import { Menu, MenuItem, Tooltip } from "@material-ui/core";
 import { activityArray } from "./activity";
 

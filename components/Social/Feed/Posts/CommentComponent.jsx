@@ -2,7 +2,7 @@ import { Delete } from "@material-ui/icons";
 import { useSession } from "next-auth/client";
 import Image from "next/image";
 import styled from "styled-components";
-import { db } from "../../../firebase";
+import { db } from "../../../../firebase";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";

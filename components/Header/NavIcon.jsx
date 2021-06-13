@@ -1,10 +1,15 @@
 import styled from "styled-components";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
-const NavIcon = ({ Icon }) => {
+const NavIcon = ({ Icon, route }) => {
+  const router = useRouter();
   return (
-    <Container>
-      <Icon style={{ fontSize: "25px" }} />
-    </Container>
+    <Link href={route}>
+      <Container>
+        <Icon style={{ fontSize: "25px" }} />
+      </Container>
+    </Link>
   );
 };
 

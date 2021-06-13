@@ -25,11 +25,13 @@ import {
 } from "@material-ui/core";
 import { signout, useSession } from "next-auth/client";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const [session] = useSession();
   const [open, setOpen] = useState(false);
   const [enter, setEnter] = useState();
+  const router = useRouter();
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -49,11 +51,11 @@ const Header = () => {
       </Logo>
 
       <NavBox>
-        <NavIcon Icon={Home} />
-        <NavIcon Icon={Flag} />
-        <NavIcon Icon={PlayArrow} />
-        <NavIcon Icon={ShoppingCart} />
-        <NavIcon Icon={People} />
+        <NavIcon Icon={Home} route="/" />
+        <NavIcon Icon={Flag} route="/" />
+        <NavIcon Icon={PlayArrow} route="/watch" />
+        <NavIcon Icon={ShoppingCart} route="/shop" />
+        <NavIcon Icon={People} route="/" />
       </NavBox>
 
       <Icons>
@@ -103,31 +105,37 @@ const Header = () => {
               <ListItemIcon>
                 <Home />
               </ListItemIcon>
-              <ListItemText primary="Home" />
+              <ListItemText primary="Home" onClick={() => router.push("")} />
             </ListItem>
             <ListItem button>
               <ListItemIcon>
                 <Person />
               </ListItemIcon>
-              <ListItemText primary="Friends" />
+              <ListItemText primary="Friends" onClick={() => router.push("")} />
             </ListItem>
             <ListItem button>
               <ListItemIcon>
                 <People />
               </ListItemIcon>
-              <ListItemText primary="Groups" />
+              <ListItemText primary="Groups" onClick={() => router.push("")} />
             </ListItem>
             <ListItem button>
               <ListItemIcon>
                 <ShoppingCart />
               </ListItemIcon>
-              <ListItemText primary="Shop" />
+              <ListItemText
+                primary="Shop"
+                onClick={() => router.push("shop")}
+              />
             </ListItem>
             <ListItem button>
               <ListItemIcon>
                 <PlayArrow />
               </ListItemIcon>
-              <ListItemText primary="Watch" />
+              <ListItemText
+                primary="Watch"
+                onClick={() => router.push("watch")}
+              />
             </ListItem>
           </List>
         </DrawerCover>

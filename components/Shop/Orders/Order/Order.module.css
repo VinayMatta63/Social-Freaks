@@ -1,0 +1,37 @@
+.order {
+  padding: 40px;
+  margin: 20px;
+  background-color: white;
+  border: 1px solid lightgray;
+  position: relative;
+}
+.order__location {
+  text-align: left;
+}
+.order__id {
+  position: absolute;
+  top: 40px;
+  right: 20px;
+}
+.order__total {
+  justify-content: space-between;
+  display: flex;
+  font-weight: 500;
+  text-align: right;
+}
+
+@media (max-width: 600px) {
+  .order__id {
+    position: relative;
+    top: 0;
+    right: 0;
+    margin-bottom: 10px;
+  }
+  .order__total {
+    font-size: 13px;
+  }
+  .order {
+    margin: 10px;
+    padding: 10px;
+  }
+}
