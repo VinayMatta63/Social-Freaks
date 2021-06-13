@@ -1,0 +1,56 @@
+.payment {
+  background-color: white;
+}
+.payment__container > h1 {
+  text-align: center;
+  padding: 10px;
+  font-weight: 400;
+  background-color: rgb(234, 237, 237);
+  border: 1px solid lightgray;
+}
+.payment__container > h1 > a {
+  text-decoration: none;
+  cursor: pointer;
+}
+.payment__section {
+  display: flex;
+  padding: 20px;
+  margin: 0 20px;
+  border-bottom: 1px solid lightgray;
+}
+.payment__title {
+  flex: 0.2;
+}
+.payment__address,
+.payment__items,
+.payment__details {
+  flex: 0.8;
+}
+.payment__priceContainer {
+  margin-top: 40px;
+}
+
+.payment__buyNow {
+  margin: 40px;
+  font-size: 13px;
+  background-color: #f0c14b;
+  border-radius: 2px;
+  width: 100px;
+  height: 40px;
+  border: solid 1px;
+  border-color: #a88734 #9c7e31 #846a29;
+  color: #111;
+  cursor: pointer;
+}
+.payment__buyNow:hover {
+  background-color: #e2b33c;
+}
+@media (max-width: 600px) {
+  .payment__section {
+    flex-direction: column;
+    align-items: center;
+  }
+  .payment__title {
+    margin-bottom: 15px;
+  }
+}

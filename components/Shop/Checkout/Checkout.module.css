@@ -1,0 +1,24 @@
+.checkout {
+  display: flex;
+  padding: 10px;
+  background-color: white;
+}
+.checkout__banner {
+  margin-bottom: 10px;
+  width: 100%;
+}
+.checkout__title {
+  margin-right: 10px;
+  padding: 10px;
+  border-bottom: 1px solid lightgray;
+}
+
+.checkout__title > h2 {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+  .checkout {
+    flex-direction: column;
+  }
+}

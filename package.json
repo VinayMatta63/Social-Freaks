@@ -11,6 +11,7 @@
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
+    "@reduxjs/toolkit": "^1.6.0",
     "axios": "^0.21.1",
     "babel-plugin-styled-components": "^1.12.0",
     "firebase": "^8.6.3",
@@ -18,8 +19,11 @@
     "next": "10.2.0",
     "next-auth": "^3.24.0",
     "react": "17.0.2",
+    "react-currency-format": "^1.0.0",
     "react-dom": "17.0.2",
     "react-firebase-hooks": "^3.0.4",
+    "react-redux": "^7.2.4",
+    "react-swift-slider": "^7.0.1",
     "styled-components": "^5.3.0"
   }
 }
