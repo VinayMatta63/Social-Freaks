@@ -19,7 +19,6 @@ const Details = () => {
         title: product.title,
         image: product.image,
         price: product.price,
-        details: product.details,
         rating: product.rating,
         quantity: parseInt(quantity),
       })

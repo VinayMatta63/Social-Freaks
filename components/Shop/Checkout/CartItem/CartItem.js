@@ -1,12 +1,11 @@
 import React from "react";
-import StarIcon from "@material-ui/icons/Star";
-import styles from "./CartItem.module.css";
 import { useDispatch } from "react-redux";
 import {
   addToCart,
   removeFromCart,
 } from "../../../../helpers/slices/cartSlice";
 import { Rating } from "@material-ui/lab";
+import styled from "styled-components";
 
 const CartItem = ({
   id,
@@ -16,10 +15,8 @@ const CartItem = ({
   price,
   hideButton,
   quantity,
-  details,
 }) => {
   const dispatch = useDispatch();
-  // const [{ user }, dispatch] = useStateValue();
   const removeCart = () => {
     dispatch(
       removeFromCart({
@@ -39,24 +36,11 @@ const CartItem = ({
       })
     );
   };
-  const checkout__cart = {
-    marginTop: "20px",
-    display: "flex",
-    fontSize: "18px",
-    borderBottom: "1px solid lightgray",
-    marginBottom: "20px",
-    fontWeight: "600",
-  };
-  const checkout__cartInfo = {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-evenly",
-  };
 
   return (
-    <div className={styles.checkout__cart} style={checkout__cart}>
-      <img src={image} alt="" className={styles.checkout__cartImage}></img>
-      <div className={styles.checkout__cartInfo} style={checkout__cartInfo}>
+    <Container>
+      <Img src={image} alt="" />
+      <CartInfo>
         <p>{title}</p>
         <p>
           <small>
@@ -69,20 +53,64 @@ const CartItem = ({
         </p>
         {hideButton && (
           <div>
-            <button
-              className={styles.checkout__cartButton}
-              onClick={removeCart}
-            >
-              Remove from Cart
-            </button>
-            <button className={styles.checkout__cartButton} onClick={addCart}>
-              Add to Cart
-            </button>
+            <Button onClick={removeCart}>Remove from Cart</Button>
+            <Button onClick={addCart}>Add to Cart</Button>
           </div>
         )}
-      </div>
-    </div>
+      </CartInfo>
+    </Container>
   );
 };
 
 export default CartItem;
+const Container = styled.div`
+  margin-top: 20px;
+  display: flex;
+  font-size: 18px;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 20px;
+  font-weight: 600;
+  @media (max-width: 600px) {
+    font-size: 1rem;
+    align-items: center;
+    text-align: center;
+  }
+`;
+const CartInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  @media (max-width: 600px) {
+    font-size: 1rem;
+    align-items: center;
+    text-align: center;
+  }
+`;
+const Img = styled.img`
+  max-height: 200px;
+  width: 300px;
+  object-fit: contain;
+  margin-bottom: 15px;
+  @media (max-width: 769px) {
+    width: 140px;
+    margin-right: 10px;
+  }
+`;
+const Button = styled.button`
+  width: 150px;
+  margin-top: 10px;
+  margin-right: 20px;
+  @media (max-width: 769px) {
+    width: 130px;
+    margin-top: 7px;
+    margin-right: 10px;
+    font-size: 11px;
+  }
+  @media (max-width: 600px) {
+    width: 120px;
+    margin-top: 5px;
+    font-size: 11px;
+    margin-bottom: 3px;
+    padding: 4px;
+  }
+`;

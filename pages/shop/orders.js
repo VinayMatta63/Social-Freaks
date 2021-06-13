@@ -8,15 +8,10 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Header from "../../components/Header/Header";
 import Login from "../../components/Login";
-import Payment from "../../components/Shop/Checkout/Payment/Payment";
+import Orders from "../../components/Shop/Orders/Orders";
 import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 
-export default function watch({ session }) {
-  const promise = loadStripe(
-    "pk_test_51IOJ4cDP76eqBtD9D8VjGv83h0TTcmskTiWGZhh2zVRg55rAO9MMF125blH0Tt8XDTD91F2CeCAkpeNCon33x72z00pigpbVtS"
-  );
+export default function orders({ session }) {
   const cart = useSelector(selectItems);
   const router = useRouter();
   const [open, setOpen] = useState(cart.length > 0 ? true : false);
@@ -61,9 +56,7 @@ export default function watch({ session }) {
             <ShoppingCart /> {cart.length > 0 ? cartSum(cart) : "Cart"}
           </Fab>
         </ButtonContainer>
-        <Elements stripe={promise}>
-          <Payment />
-        </Elements>
+        <Orders />
       </Main>
     </Container>
   );
