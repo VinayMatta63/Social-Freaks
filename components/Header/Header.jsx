@@ -69,7 +69,7 @@ const Header = () => {
           </IconContainer>
         </Link>
         <Link href={"/chat"}>
-          <IconContainer active={active === "/chat"}>
+          <IconContainer active={active === "/chat" || active === "/chat/[id]"}>
             <Chat style={{ fontSize: "25px" }} />
           </IconContainer>
         </Link>
