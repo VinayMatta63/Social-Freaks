@@ -11,6 +11,7 @@ module.exports = {
       "avatars.githubusercontent.com",
       "firebasestorage.googleapis.com",
       "links.papareact.com",
+      "www.fakestoreapi.com",
     ],
   },
 };

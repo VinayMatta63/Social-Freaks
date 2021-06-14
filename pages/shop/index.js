@@ -1,5 +1,10 @@
 import { Fab, IconButton } from "@material-ui/core";
-import { ArrowLeft, ArrowRight, ShoppingCart } from "@material-ui/icons";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ShoppingCart,
+  History,
+} from "@material-ui/icons";
 import { getSession } from "next-auth/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -11,7 +16,7 @@ import Login from "../../components/Login";
 import Home from "../../components/Shop/Home";
 import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
 
-export default function watch({ session }) {
+export default function watch({ session, products }) {
   const cart = useSelector(selectItems);
   const router = useRouter();
   const [open, setOpen] = useState(cart.length > 0 ? true : false);
@@ -32,7 +37,7 @@ export default function watch({ session }) {
       <Header />
       <Main>
         <ButtonContainer
-          style={{ transform: `${open ? "none" : "translateX(60%)"}` }}
+          style={{ transform: `${open ? "none" : "translateX(80%)"}` }}
         >
           {open ? (
             <IconButton onClick={() => setOpen(!open)}>
@@ -50,13 +55,21 @@ export default function watch({ session }) {
             style={{
               // display: `${open ? "inline" : "none"}`,
               visibility: `${open ? "visible" : "hidden"}`,
+              marginRight: "10px",
             }}
             onClick={() => router.push("/shop/checkout")}
           >
             <ShoppingCart /> {cart.length > 0 ? cartSum(cart) : "Cart"}
           </Fab>
+          <Fab
+            color="primary"
+            variant="extended"
+            onClick={() => router.push("/shop/orders")}
+          >
+            <History /> Orders
+          </Fab>
         </ButtonContainer>
-        <Home />
+        <Home products={products} />
       </Main>
     </Container>
   );
@@ -64,8 +77,11 @@ export default function watch({ session }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
+  const products = await fetch("https://fakestoreapi.com/products").then(
+    (res) => res.json()
+  );
 
-  return { props: { session } };
+  return { props: { session, products } };
 }
 
 const Container = styled.div`

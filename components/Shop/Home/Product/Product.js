@@ -59,7 +59,7 @@ const Container = styled.div`
   padding: 20px;
   max-height: 350px;
   min-width: 100px;
-  width: 100%;
+  max-width: 400px;
   font-weight: 600;
   border-radius: 4px;
   background-size: cover;
@@ -74,7 +74,7 @@ const Container = styled.div`
     box-shadow: 0px 30px 100px -10px rgba(0, 0, 0, 0.4);
   }
   @media (max-width: 769px) {
-    width: 82%;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
   }
