@@ -7,15 +7,14 @@ import Subtotal from "./Subtotal/Subtotal";
 import styled from "styled-components";
 
 const Checkout = () => {
-  // const [{ cart, user }] = useStateValue();
   const [session] = useSession();
   const cart = useSelector(selectItems);
   return (
     <Container>
       <Items>
         <Img
-          src="https://images-eu.ssl-images-amazon.com/images/G/31/img20/Vernac13th/1500x150_V2_Eng._CB412582591_.jpg"
-          alt="amazon_banner"
+          src="https://images.unsplash.com/photo-1567752588693-ad10a647c5a3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+          alt="Banner"
         />
         <Title>
           <HeadTitle>Hello, {session.user.name}</HeadTitle>
@@ -62,6 +61,7 @@ const Title = styled.div`
 const Img = styled.img`
   margin-bottom: 10px;
   width: 100%;
+  max-height: 200px;
 `;
 
 const HeadTitle = styled.h2`

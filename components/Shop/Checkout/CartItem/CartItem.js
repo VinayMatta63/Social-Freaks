@@ -97,9 +97,20 @@ const Img = styled.img`
   }
 `;
 const Button = styled.button`
+  background-color: #3fb497;
+  border: none;
+  outline: none;
+  color: #fafafa;
+  padding: 5px;
+  font-size: 15px;
+  border-radius: 5px;
+  cursor: pointer;
   width: 150px;
   margin-top: 10px;
   margin-right: 20px;
+  :hover {
+    background-color: #4bdab6;
+  }
   @media (max-width: 769px) {
     width: 130px;
     margin-top: 7px;

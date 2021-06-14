@@ -72,11 +72,20 @@ const Gift = styled.small`
 `;
 
 const Button = styled.button`
-  border-radius: 2px;
   width: 100%;
   height: 35px;
   margin-top: 10px;
   cursor: pointer;
+  background-color: #3fb497;
+  border: none;
+  outline: none;
+  color: #fafafa;
+  padding: 5px;
+  font-size: 15px;
+  border-radius: 5px;
+  :hover {
+    background-color: #4bdab6;
+  }
 `;
 const Input = styled.input`
   margin-right: 10px;
