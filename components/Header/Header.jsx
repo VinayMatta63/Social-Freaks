@@ -2,10 +2,10 @@ import Image from "next/image";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
 import {
+  Chat,
   Flag,
   Home,
   Menu,
-  People,
   Person,
   PlayArrow,
   ShoppingCart,
@@ -68,9 +68,9 @@ const Header = () => {
             <ShoppingCart style={{ fontSize: "25px" }} />
           </IconContainer>
         </Link>
-        <Link href={"/"}>
-          <IconContainer active={active === "/people"}>
-            <People style={{ fontSize: "25px" }} />
+        <Link href={"/chat"}>
+          <IconContainer active={active === "/chat"}>
+            <Chat style={{ fontSize: "25px" }} />
           </IconContainer>
         </Link>
       </NavBox>
@@ -110,19 +110,25 @@ const Header = () => {
               <ListItemIcon>
                 <Home />
               </ListItemIcon>
-              <ListItemText primary="Home" onClick={() => router.push("")} />
+              <ListItemText primary="Home" onClick={() => router.push("/")} />
             </ListItem>
             <ListItem button>
               <ListItemIcon>
                 <Person />
               </ListItemIcon>
-              <ListItemText primary="Friends" onClick={() => router.push("")} />
+              <ListItemText
+                primary="Friends"
+                onClick={() => router.push("/")}
+              />
             </ListItem>
             <ListItem button>
               <ListItemIcon>
-                <People />
+                <Chat />
               </ListItemIcon>
-              <ListItemText primary="Groups" onClick={() => router.push("")} />
+              <ListItemText
+                primary="Chat"
+                onClick={() => router.push("/chat")}
+              />
             </ListItem>
             <ListItem button>
               <ListItemIcon>
@@ -130,7 +136,7 @@ const Header = () => {
               </ListItemIcon>
               <ListItemText
                 primary="Shop"
-                onClick={() => router.push("shop")}
+                onClick={() => router.push("/shop")}
               />
             </ListItem>
             <ListItem button>
@@ -139,7 +145,7 @@ const Header = () => {
               </ListItemIcon>
               <ListItemText
                 primary="Watch"
-                onClick={() => router.push("watch")}
+                onClick={() => router.push("/watch")}
               />
             </ListItem>
           </List>
@@ -153,6 +159,7 @@ export default Header;
 
 const Container = styled.div`
   display: flex;
+  align-items: center;
   background-color: #fafafa;
   padding: 10px;
   height: 10vh;
@@ -184,9 +191,6 @@ const Input = styled.input`
   border: none;
   outline: none;
   font-size: 12px;
-  @media (max-width: 768px) {
-    display: none;
-  }
 `;
 const InputBox = styled.div`
   background-color: #fff;
@@ -196,12 +200,16 @@ const InputBox = styled.div`
   border: 1px solid #ccc;
   border-radius: 50px;
   padding: 3px;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 const Icons = styled.div`
   display: flex;
   align-items: center;
   @media (max-width: 768px) {
     margin-left: 20px;
+    flex: 1;
   }
 `;
 const Name = styled.p`

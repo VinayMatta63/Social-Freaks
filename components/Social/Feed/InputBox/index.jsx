@@ -212,6 +212,9 @@ const InputBox = () => {
           ))}
         </Menu>
       </Buttons>
+      <Button type="post" onClick={(e) => sendPost(e)}>
+        Post
+      </Button>
     </Container>
   );
 };
@@ -279,6 +282,8 @@ const Button = styled.div`
       return "color:red;border-radius:0 0 0 15px;";
     } else if (props.type === "upload") {
       return "color:lightgreen;";
+    } else if (props.type === "post") {
+      return "color:green;border-top:1px solid lightgray;";
     } else {
       return "color:#e7e702;border-radius:0 0 15px 0;";
     }
@@ -294,6 +299,9 @@ const Button = styled.div`
         return "background-color:#e7e702;color:white;";
       }
     }}
+  }
+  @media (min-width: 769px) {
+    ${(props) => props.type === "post" && "display:none;"}
   }
 `;
 

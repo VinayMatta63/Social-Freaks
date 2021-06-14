@@ -26,6 +26,9 @@ export default Orders;
 
 const Container = styled.div`
   padding: 20px 80px;
+  @media (max-width: 769px) {
+    padding: 0;
+  }
 `;
 const Head = styled.h1`
   margin: 30px 0;
