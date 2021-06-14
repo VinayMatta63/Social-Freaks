@@ -2,19 +2,14 @@ import Image from "next/image";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
 import {
-  ExpandMore,
-  FavoriteSharp,
   Flag,
   Home,
   Menu,
-  NotificationsRounded,
   People,
   Person,
   PlayArrow,
   ShoppingCart,
-  Sms,
 } from "@material-ui/icons";
-import NavIcon from "./NavIcon";
 import {
   Drawer,
   IconButton,
@@ -26,12 +21,14 @@ import {
 import { signout, useSession } from "next-auth/client";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Header = () => {
   const [session] = useSession();
   const [open, setOpen] = useState(false);
   const [enter, setEnter] = useState();
   const router = useRouter();
+  const [active, setActive] = useState(router.pathname);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -51,11 +48,31 @@ const Header = () => {
       </Logo>
 
       <NavBox>
-        <NavIcon Icon={Home} route="/" />
-        <NavIcon Icon={Flag} route="/" />
-        <NavIcon Icon={PlayArrow} route="/watch" />
-        <NavIcon Icon={ShoppingCart} route="/shop" />
-        <NavIcon Icon={People} route="/" />
+        <Link href={"/"}>
+          <IconContainer active={active === "/"}>
+            <Home style={{ fontSize: "25px" }} />
+          </IconContainer>
+        </Link>
+        <Link href={"/"}>
+          <IconContainer active={active === "/flag"}>
+            <Flag style={{ fontSize: "25px" }} />
+          </IconContainer>
+        </Link>
+        <Link href={"/watch"}>
+          <IconContainer active={active === "/watch"}>
+            <PlayArrow style={{ fontSize: "25px" }} />
+          </IconContainer>
+        </Link>
+        <Link href={"/shop"}>
+          <IconContainer active={active === "/shop"}>
+            <ShoppingCart style={{ fontSize: "25px" }} />
+          </IconContainer>
+        </Link>
+        <Link href={"/"}>
+          <IconContainer active={active === "/people"}>
+            <People style={{ fontSize: "25px" }} />
+          </IconContainer>
+        </Link>
       </NavBox>
 
       <Icons>
@@ -76,18 +93,6 @@ const Header = () => {
             Signout
           </Signout>
         </User>
-
-        <IconBox>
-          <IconButton>
-            <Sms style={{ color: "lightgray" }} />
-          </IconButton>
-          <IconButton>
-            <NotificationsRounded style={{ color: "lightgray" }} />
-          </IconButton>
-          <IconButton>
-            <ExpandMore style={{ color: "lightgray" }} />
-          </IconButton>
-        </IconBox>
       </Icons>
       <Hamburger>
         <IconButton onClick={toggleDrawer}>
@@ -215,12 +220,6 @@ const Name = styled.p`
   ${(props) => props.enter && "transform:translateY(-15px);"}
 `;
 
-const IconBox = styled.div`
-  @media (max-width: 868px) {
-    display: none;
-  }
-`;
-
 const User = styled.div`
   display: flex;
   flex-direction: column;
@@ -252,5 +251,26 @@ const DrawerCover = styled.div`
 const Hamburger = styled.span`
   @media (min-width: 769px) {
     display: none;
+  }
+`;
+
+const IconContainer = styled.div`
+  cursor: pointer;
+  color: lightgray;
+  height: 10vh;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  ${(props) => props.active && "color: #58ffd5;background-color: lightgray;"}
+  :active {
+    border-bottom: 5px solid #58ffd5;
+    box-sizing: border-box;
+  }
+  :hover {
+    color: #58ffd5;
+    background-color: lightgray;
+  }
+  @media (max-width: 768px) {
+    padding: 0 8px;
   }
 `;

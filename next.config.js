@@ -12,6 +12,7 @@ module.exports = {
       "firebasestorage.googleapis.com",
       "links.papareact.com",
       "www.fakestoreapi.com",
+      "images.unsplash.com",
     ],
   },
 };

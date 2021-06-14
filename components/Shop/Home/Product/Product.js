@@ -41,7 +41,7 @@ const Product = ({ id, title, image, price, rating, details }) => {
       <Img src={image} />
 
       <div>
-        <button>Details</button>
+        <Button>Details</Button>
       </div>
     </Container>
   );
@@ -101,4 +101,18 @@ const Img = styled.img`
   width: 100%;
   object-fit: contain;
   margin-bottom: 8px;
+`;
+
+const Button = styled.button`
+  background-color: #3fb497;
+  border: none;
+  outline: none;
+  color: #fafafa;
+  padding: 5px;
+  font-size: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  :hover {
+    background-color: #4bdab6;
+  }
 `;

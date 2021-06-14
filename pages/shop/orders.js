@@ -50,7 +50,9 @@ export default function orders({ session }) {
             style={{
               // display: `${open ? "inline" : "none"}`,
               visibility: `${open ? "visible" : "hidden"}`,
+              backgroundColor: "#3fb497",
             }}
+            disabled={cart.length <= 0 ? true : false}
             onClick={() => router.push("/shop/checkout")}
           >
             <ShoppingCart /> {cart.length > 0 ? cartSum(cart) : "Cart"}

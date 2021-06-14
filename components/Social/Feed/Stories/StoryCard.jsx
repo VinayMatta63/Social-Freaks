@@ -30,7 +30,7 @@ const StoryCard = ({ data }) => {
         )}
 
         {data.data().type == "photo" && data.data().status ? (
-          <Img outer={true} src={data.data().status} layout="fill" />
+          <Img outer="true" src={data.data().status} layout="fill" />
         ) : (
           <PlayArrow
             style={{

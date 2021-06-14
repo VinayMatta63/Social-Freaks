@@ -52,6 +52,7 @@ const Details = () => {
             type="number"
             defaultValue={1}
             min={1}
+            value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
           />
         </Quantity>
@@ -142,7 +143,7 @@ const Input = styled.input`
   margin-left: 20px;
   padding: 10px;
   font-size: 18px;
-  width: 40px;
+  width: 60px;
   @media (max-width: 769px) {
     margin-left: 10px;
     padding: 5px;
@@ -151,11 +152,20 @@ const Input = styled.input`
   }
 `;
 const Button = styled.button`
+  background-color: #3fb497;
+  border: none;
+  outline: none;
+  color: #fafafa;
+  border-radius: 5px;
+  cursor: pointer;
   text-align: center;
   align-self: center;
   padding: 10px;
   font-size: 13px;
   width: 15%;
+  :hover {
+    background-color: #4bdab6;
+  }
   @media (max-width: 769px) {
     font-size: 11px;
     width: fit-content;
