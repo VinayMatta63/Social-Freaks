@@ -1,5 +1,10 @@
 import { Fab, IconButton } from "@material-ui/core";
-import { ArrowLeft, ArrowRight, ShoppingCart } from "@material-ui/icons";
+import {
+  ArrowLeft,
+  ArrowRight,
+  History,
+  ShoppingCart,
+} from "@material-ui/icons";
 import { getSession } from "next-auth/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -37,7 +42,7 @@ export default function watch({ session }) {
       <Header />
       <Main>
         <ButtonContainer
-          style={{ transform: `${open ? "none" : "translateX(60%)"}` }}
+          style={{ transform: `${open ? "none" : "translateX(80%)"}` }}
         >
           {open ? (
             <IconButton onClick={() => setOpen(!open)}>
@@ -59,6 +64,13 @@ export default function watch({ session }) {
             onClick={() => router.push("/shop/checkout")}
           >
             <ShoppingCart /> {cart.length > 0 ? cartSum(cart) : "Cart"}
+          </Fab>
+          <Fab
+            color="primary"
+            variant="extended"
+            onClick={() => router.push("/shop/orders")}
+          >
+            <History /> Orders
           </Fab>
         </ButtonContainer>
         <Elements stripe={promise}>

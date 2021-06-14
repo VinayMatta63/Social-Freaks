@@ -1,24 +1,32 @@
 import React from "react";
-import styles from "./Orders.module.css";
 import Order from "./Order/Order";
 import { db } from "../../../firebase";
 import { useCollection } from "react-firebase-hooks/firestore";
+import styled from "styled-components";
+
 const Orders = () => {
   const [orderList] = useCollection(
     db.collection("orders").orderBy("created", "desc")
   );
   return (
-    <div className={styles.order}>
-      <h1>Your Orders</h1>
-      <div className={styles.order__orders}>
+    <Container>
+      <Head>Your Orders</Head>
+      <div>
         {orderList &&
           orderList.docs.map((order) => {
-            console.log(order.data());
-            return <Order order={order.data()} />;
+            // console.log(order.data());
+            return <Order id={order.id} order={order.data()} />;
           })}
       </div>
-    </div>
+    </Container>
   );
 };
 
 export default Orders;
+
+const Container = styled.div`
+  padding: 20px 80px;
+`;
+const Head = styled.h1`
+  margin: 30px 0;
+`;
