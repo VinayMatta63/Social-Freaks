@@ -80,6 +80,9 @@ export default function watch({ session, products }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
+  if (session && !(session.user in db.collection("users"))) {
+    db.collection("users").add(session.user);
+  }
   const products = await fetch("https://fakestoreapi.com/products").then(
     (res) => res.json()
   );

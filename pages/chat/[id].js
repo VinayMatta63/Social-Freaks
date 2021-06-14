@@ -4,11 +4,17 @@ import styled from "styled-components";
 import ChatScreen from "../../components/Chat/ChatScreen";
 import Sidebar from "../../components/Chat/Sidebar";
 import Header from "../../components/Header/Header";
-const Chat = () => {
+import Login from "../../components/Login";
+import { db } from "../../firebase";
+import getRecipientEmail from "../../helpers/getRecipientEmail";
+const Chat = ({ session, messages, chat }) => {
+  if (!session) {
+    return <Login />;
+  }
   return (
     <Container>
       <Head>
-        <title>Freaks Chat</title>
+        <title>Chat with {getRecipientEmail(chat.users, session.user)}</title>
         <meta name="description" content="Chatting platform for Geeks" />
         <link
           rel="icon"
@@ -19,7 +25,7 @@ const Chat = () => {
       <Main>
         <Sidebar />
         <ChatContainer>
-          <ChatScreen />
+          <ChatScreen chat={chat} messages={messages} />
         </ChatContainer>
       </Main>
     </Container>
@@ -30,7 +36,26 @@ export default Chat;
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  return { props: { session } };
+  const ref = db.collection("chats").doc(context.query.id);
+  const messagesRes = await ref
+    .collection("messages")
+    .orderBy("timestamp", "asc")
+    .get();
+  const messages = messagesRes.docs
+    .map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
+    .map((message) => ({
+      ...message,
+      timestamp: message.timestamp.toDate().getTime(),
+    }));
+  const chatRes = await ref.get();
+  const chat = {
+    id: chatRes.id,
+    ...chatRes.data(),
+  };
+  return { props: { session, messages: JSON.stringify(messages), chat: chat } };
 }
 const Container = styled.div`
   overflow: hidden;

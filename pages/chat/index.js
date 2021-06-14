@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Sidebar from "../../components/Chat/Sidebar";
 import Header from "../../components/Header/Header";
 import Login from "../../components/Login";
+import { db } from "../../firebase";
 
 export default function Chat({ session }) {
   if (!session) {
@@ -29,7 +30,9 @@ export default function Chat({ session }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-
+  if (session && !(session?.user in db.collection("users"))) {
+    db.collection("users").add(session.user);
+  }
   return { props: { session } };
 }
 
