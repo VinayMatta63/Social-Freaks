@@ -8,9 +8,11 @@ import { db } from "../../firebase";
 import { useCollection } from "react-firebase-hooks/firestore";
 import Chat from "./Chat";
 import { useSession } from "next-auth/client";
+import { useRouter } from "next/router";
 
 const Sidebar = () => {
   const [session] = useSession();
+  const router = useRouter();
   const userChatRef = db
     .collection("chats")
     .where("users", "array-contains", session.user.email);
@@ -36,7 +38,7 @@ const Sidebar = () => {
     );
   };
   return (
-    <Container>
+    <Container id={router.query.id}>
       <Header>
         <UserAvatar src={session.user.image} />
         <IconsContainer>
@@ -74,6 +76,9 @@ const Container = styled.div`
   }
   -ms-overflow-style: none;
   scrollbar-width: none;
+  @media (max-width: 767px) {
+    ${(props) => props.id && "display:none"}
+  }
 `;
 
 const Header = styled.div`
