@@ -7,7 +7,12 @@ const Message = ({ user, message }) => {
     <ChatMessage reciever={message.user === session.user.email}>
       <ChatName>{message.name}</ChatName>
       {message.message}
-      <ChatTimestamp>{message.timestamp}</ChatTimestamp>
+      <ChatTimestamp>
+        {message.timestamp
+          ? `${new Date(message.timestamp).toLocaleDateString("en-US")}
+        ${new Date(message.timestamp).toLocaleTimeString("en-US")}`
+          : "Loading...."}
+      </ChatTimestamp>
     </ChatMessage>
   );
 };

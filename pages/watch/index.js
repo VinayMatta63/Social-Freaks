@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Header from "../../components/Header/Header";
 import Login from "../../components/Login";
 import HomeScreen from "../../components/Watch/HomeScreen/HomeScreen";
+import { db } from "../../firebase";
 import axios from "../../helpers/axios";
 import requests from "../../helpers/Request";
 

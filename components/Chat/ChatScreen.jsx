@@ -6,6 +6,7 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import { useEffect, useState } from "react";
 import { Avatar, IconButton, Modal, Tooltip } from "@material-ui/core";
+import Picker from "emoji-picker-react";
 import firebase from "firebase";
 import {
   AttachFile,
@@ -23,7 +24,7 @@ import getRecipientEmail from "../../helpers/getRecipientEmail";
 const ChatScreen = ({ chat, messages }) => {
   const [session] = useSession();
   const router = useRouter();
-
+  const [chosenEmoji, setChosenEmoji] = useState(null);
   const [messagesSnapshot] = useCollection(
     db
       .collection("chats")
@@ -39,7 +40,15 @@ const ChatScreen = ({ chat, messages }) => {
     .filter((user) => user.email === recipientEmail)[0];
 
   const [input, setInput] = useState("");
+  const onEmojiClick = (event, emojiObject) => {
+    setChosenEmoji(emojiObject.emoji);
+    input ? setInput(input + chosenEmoji) : setInput(chosenEmoji);
+  };
+
   const { transcript, resetTranscript } = useSpeechRecognition();
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+    return null;
+  }
 
   useEffect(() => {
     setInput(transcript);
@@ -56,6 +65,7 @@ const ChatScreen = ({ chat, messages }) => {
 
   const sendMessage = async (e) => {
     e.preventDefault();
+    resetTranscript();
     // db.collection("users")
     //   .doc(user.uid)
     //   .set(
@@ -129,7 +139,7 @@ const ChatScreen = ({ chat, messages }) => {
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
         >
-          {/* {<Picker onEmojiClick={onEmojiClick} />} */}
+          {<Picker onEmojiClick={onEmojiClick} />}
         </Modal>
         <Form>
           <Input
@@ -187,7 +197,7 @@ const ChatBody = styled.div`
   background-position: center;
   padding: 30px;
   overflow: scroll;
-  min-height: 60vh;
+  min-height: 71vh;
   position: relative;
 `;
 

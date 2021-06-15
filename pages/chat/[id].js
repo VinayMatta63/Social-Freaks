@@ -1,7 +1,12 @@
 import { getSession } from "next-auth/client";
+import dynamic from "next/dynamic";
+
+const ChatScreen = dynamic(() => import("../../components/Chat/ChatScreen"), {
+  ssr: false,
+});
+
 import Head from "next/head";
 import styled from "styled-components";
-import ChatScreen from "../../components/Chat/ChatScreen";
 import Sidebar from "../../components/Chat/Sidebar";
 import Header from "../../components/Header/Header";
 import Login from "../../components/Login";
