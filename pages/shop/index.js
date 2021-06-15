@@ -14,6 +14,7 @@ import styled from "styled-components";
 import Header from "../../components/Header/Header";
 import Login from "../../components/Login";
 import Home from "../../components/Shop/Home";
+import { db } from "../../firebase";
 import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
 
 export default function watch({ session, products }) {
@@ -80,8 +81,10 @@ export default function watch({ session, products }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  if (session && !(session.user in db.collection("users"))) {
-    db.collection("users").add(session.user);
+  if (session && !(session.user.email in db.collection("users"))) {
+    db.collection("users")
+      .doc(session.user.email)
+      .set({ ...session.user });
   }
   const products = await fetch("https://fakestoreapi.com/products").then(
     (res) => res.json()

@@ -5,23 +5,25 @@ import { db } from "../../firebase";
 import { useRouter } from "next/router";
 import getRecipientEmail from "../../helpers/getRecipientEmail";
 import { useSession } from "next-auth/client";
+
 const Chat = ({ id, users }) => {
   const router = useRouter();
   const [session] = useSession();
-  const [recipientSnapshot] = useCollection(
-    db
-      .collection("users")
-      .where("email", "==", getRecipientEmail(users, session.user))
-  );
+
+  const [recipientSnapshot] = useCollection(db.collection("users"));
   const enterChat = () => {
     router.push(`/chat/${id}`);
   };
-  const recipient = recipientSnapshot?.docs?.[0]?.data();
+
   const recipientEmail = getRecipientEmail(users, session.user);
+  const recipient = recipientSnapshot?.docs
+    .map((user) => user.data())
+    .filter((user) => user.email === recipientEmail)[0];
+
   return (
     <Container onClick={enterChat}>
       {recipient ? (
-        <UserAvatar src={recipient?.photoURL} />
+        <UserAvatar src={recipient?.image} />
       ) : (
         <UserAvatar>{recipientEmail[0]}</UserAvatar>
       )}

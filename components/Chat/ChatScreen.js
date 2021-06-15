@@ -32,21 +32,28 @@ const ChatScreen = ({ chat, messages }) => {
       .orderBy("timestamp", "asc")
   );
 
+  const [recipientSnapshot] = useCollection(db.collection("users"));
+  const recipientEmail = getRecipientEmail(chat.users, session.user);
+  const recipient = recipientSnapshot?.docs
+    .map((user) => user.data())
+    .filter((user) => user.email === recipientEmail)[0];
+
   const [input, setInput] = useState("");
   const { transcript, resetTranscript } = useSpeechRecognition();
 
   useEffect(() => {
     setInput(transcript);
   }, [transcript]);
+
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
+
   const sendMessage = async (e) => {
     e.preventDefault();
     // db.collection("users")
@@ -63,7 +70,6 @@ const ChatScreen = ({ chat, messages }) => {
     });
     setInput("");
   };
-  const recepientEmail = getRecipientEmail(chat.users, session.user);
   const showMessages = () => {
     if (messagesSnapshot) {
       return messagesSnapshot.docs.map((message) => (
@@ -85,10 +91,10 @@ const ChatScreen = ({ chat, messages }) => {
   return (
     <Container>
       <Header>
-        <Avatar src={session.user.image} />
+        <Avatar src={recipient?.image} />
         <HeaderInfo>
-          <Name>{session.user.name}</Name>
-          <p>last seen {messages[messages.length - 1]?.timestamp}</p>
+          <Name>{recipient?.name}</Name>
+          <p>{recipient?.email}</p>
         </HeaderInfo>
         <div>
           <Tooltip title="Search" arrow={true}>

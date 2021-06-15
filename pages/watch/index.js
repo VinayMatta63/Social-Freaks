@@ -31,6 +31,11 @@ export default function watch({ session, topRated }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
+  if (session && !(session.user.email in db.collection("users"))) {
+    db.collection("users")
+      .doc(session.user.email)
+      .set({ ...session.user });
+  }
   const request = await axios.get(requests.fetchTopRated);
   const topRated = request.data.results;
   return { props: { session, topRated } };
