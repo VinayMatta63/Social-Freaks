@@ -1,4 +1,6 @@
-module.exports = {
+const withPWA = require("next-pwa");
+
+module.exports = withPWA({
   env: {
     TMDB_API: "cf24a95b77b299531fe34e5d38969d50",
   },
@@ -15,4 +17,9 @@ module.exports = {
       "images.unsplash.com",
     ],
   },
-};
+  pwa: {
+    dest: "public",
+    register: true,
+    skipWaiting: true,
+  },
+});
