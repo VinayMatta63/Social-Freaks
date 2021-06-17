@@ -16,9 +16,8 @@ const Orders = () => {
       <div>
         {orderList &&
           orderList.docs
-            .filter((order) => order.email === session.user.email)
+            .filter((order) => order.data().email === session.user.email)
             .map((order) => {
-              // console.log(order.data());
               return <Order id={order.id} order={order.data()} />;
             })}
       </div>
