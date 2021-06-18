@@ -39,7 +39,7 @@ export async function getServerSideProps(context) {
       .doc(session.user.email)
       .set({ ...session.user });
   }
-
+  console.log("run");
   const posts = await db.collection("posts").orderBy("timestamp", "desc").get();
   const docs = posts.docs.map((post) => ({
     id: post.id,
