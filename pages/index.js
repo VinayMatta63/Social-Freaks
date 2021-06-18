@@ -34,12 +34,19 @@ export default function Home({ session, posts }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  if (session && !(session.user.email in db.collection("users"))) {
+
+  if (
+    session &&
+    !(
+      await (
+        await db.collection("users").get()
+      ).docs.map((user) => user.data().email)
+    ).includes(session.user.email)
+  ) {
     db.collection("users")
       .doc(session.user.email)
       .set({ ...session.user });
   }
-
   const posts = await db.collection("posts").orderBy("timestamp", "desc").get();
   const docs = posts.docs.map((post) => ({
     id: post.id,
