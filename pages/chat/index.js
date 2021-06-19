@@ -5,6 +5,7 @@ import Sidebar from "../../components/Chat/Sidebar";
 import Header from "../../components/Header/Header";
 import Login from "../../components/Login";
 import { db } from "../../firebase";
+import { useCollection } from "react-firebase-hooks/firestore";
 
 export default function Chat({ session }) {
   if (!session) {
@@ -43,7 +44,7 @@ export default function Chat({ session }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  
+
   return { props: { session } };
 }
 

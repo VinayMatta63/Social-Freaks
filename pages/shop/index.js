@@ -16,6 +16,7 @@ import Login from "../../components/Login";
 import Home from "../../components/Shop/Home";
 import { db } from "../../firebase";
 import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
+import { useCollection } from "react-firebase-hooks/firestore";
 
 export default function watch({ session, products }) {
   const cart = useSelector(selectItems);
