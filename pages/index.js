@@ -61,6 +61,7 @@ const Container = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 const Main = styled.div`
   display: flex;

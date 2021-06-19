@@ -16,6 +16,7 @@ const Feed = ({ posts }) => {
 export default Feed;
 const Container = styled.div`
   max-width: 45vw;
+  margin-top: 45px;
   @media (max-width: 768px) {
     padding-left: 10px;
     padding-right: 10px;

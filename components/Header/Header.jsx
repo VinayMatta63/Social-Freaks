@@ -3,7 +3,6 @@ import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
 import {
   Chat,
-  Flag,
   Home,
   Menu,
   Person,
@@ -17,6 +16,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Tooltip,
 } from "@material-ui/core";
 import { signout, useSession } from "next-auth/client";
 import { useState } from "react";
@@ -49,29 +49,41 @@ const Header = () => {
 
       <NavBox>
         <Link href={"/"}>
-          <IconContainer active={active === "/"}>
-            <Home style={{ fontSize: "25px" }} />
-          </IconContainer>
+          <Tooltip title="Home" arrow>
+            <IconContainer active={active === "/"}>
+              <Home style={{ fontSize: "25px" }} />
+            </IconContainer>
+          </Tooltip>
         </Link>
         <Link href={"/"}>
-          <IconContainer active={active === "/flag"}>
-            <Flag style={{ fontSize: "25px" }} />
-          </IconContainer>
+          <Tooltip title="Friends" arrow>
+            <IconContainer active={active === "/flag"}>
+              <Person style={{ fontSize: "25px" }} />
+            </IconContainer>
+          </Tooltip>
         </Link>
         <Link href={"/watch"}>
-          <IconContainer active={active === "/watch"}>
-            <PlayArrow style={{ fontSize: "25px" }} />
-          </IconContainer>
+          <Tooltip title="Watch" arrow>
+            <IconContainer active={active === "/watch"}>
+              <PlayArrow style={{ fontSize: "25px" }} />
+            </IconContainer>
+          </Tooltip>
         </Link>
         <Link href={"/shop"}>
-          <IconContainer active={active === "/shop"}>
-            <ShoppingCart style={{ fontSize: "25px" }} />
-          </IconContainer>
+          <Tooltip title="Shop" arrow>
+            <IconContainer active={active === "/shop"}>
+              <ShoppingCart style={{ fontSize: "25px" }} />
+            </IconContainer>
+          </Tooltip>
         </Link>
         <Link href={"/chat"}>
-          <IconContainer active={active === "/chat" || active === "/chat/[id]"}>
-            <Chat style={{ fontSize: "25px" }} />
-          </IconContainer>
+          <Tooltip title="Chat" arrow>
+            <IconContainer
+              active={active === "/chat" || active === "/chat/[id]"}
+            >
+              <Chat style={{ fontSize: "25px" }} />
+            </IconContainer>
+          </Tooltip>
         </Link>
       </NavBox>
 
@@ -163,8 +175,9 @@ const Container = styled.div`
   background-color: #fafafa;
   padding: 10px;
   height: 10vh;
-  position: sticky;
-  z-index: 101;
+  position: fixed;
+  width: 100%;
+  z-index: 1001;
   box-shadow: rgba(0, 0, 0, 0.205) 0px 4px 6px -2px;
 `;
 

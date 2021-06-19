@@ -39,6 +39,9 @@ export default Widgets;
 
 const Container = styled.div`
   flex: 0.2;
+  position: fixed;
+  right: 0;
+  margin-top: 45px;
   @media (max-width: 768px) {
     display: none;
   }

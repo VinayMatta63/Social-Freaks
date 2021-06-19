@@ -1,17 +1,20 @@
 import Image from "next/image";
+import Link from "next/link";
 import styled from "styled-components";
 
-const Row = ({ src, Icon, title }) => {
+const Row = ({ src, Icon, title, href }) => {
   return (
-    <Container>
-      {src ? (
-        <Img src={src} height={30} width={30} layout="fixed" />
-      ) : (
-        <Icon style={{ color: "#4bdab6", fontSize: "30px" }} />
-      )}
+    <Link href={href}>
+      <Container>
+        {src ? (
+          <Img src={src} height={30} width={30} layout="fixed" />
+        ) : (
+          <Icon style={{ color: "#4bdab6", fontSize: "30px" }} />
+        )}
 
-      <Title>{title}</Title>
-    </Container>
+        <Title>{title}</Title>
+      </Container>
+    </Link>
   );
 };
 

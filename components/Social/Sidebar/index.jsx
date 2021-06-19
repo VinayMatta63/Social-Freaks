@@ -1,6 +1,8 @@
 import {
   CalendarToday,
   Computer,
+  Home,
+  Message,
   MoreHoriz,
   People,
   Person,
@@ -15,14 +17,13 @@ const Sidebar = () => {
   const [session] = useSession();
   return (
     <Container>
-      <Row src={session.user.image} title={session.user.name} />
-      <Row Icon={Person} title="Friends" />
-      <Row Icon={People} title="Groups" />
-      <Row Icon={ShoppingBasketOutlined} title="Mart" />
-      <Row Icon={Computer} title="Watch" />
-      <Row Icon={TimerOutlined} title="Memories" />
-      <Row Icon={CalendarToday} title="Events" />
-      <Row Icon={MoreHoriz} title="More" />
+      <Row src={session.user.image} title={session.user.name} href="/" />
+      <Row Icon={Home} title="Home" href="/" />
+      <Row Icon={Person} title="Friends" href="/" />
+      <Row Icon={ShoppingBasketOutlined} title="Shop" href="/shop" />
+      <Row Icon={Computer} title="Watch" href="/watch" />
+      <Row Icon={Message} title="Chat" href="/chat" />
+      <Row Icon={MoreHoriz} title="More" href="/" />
     </Container>
   );
 };
@@ -30,7 +31,10 @@ const Sidebar = () => {
 export default Sidebar;
 
 const Container = styled.div`
-  flex: 0.2;
+  max-width: 30vw;
+  position: fixed;
+  margin-top: 45px;
+  left: 0;
   @media (max-width: 768px) {
     display: none;
   }
