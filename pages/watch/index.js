@@ -7,6 +7,7 @@ import HomeScreen from "../../components/Watch/HomeScreen/HomeScreen";
 import { db } from "../../firebase";
 import axios from "../../helpers/axios";
 import requests from "../../helpers/Request";
+import { useCollection } from "react-firebase-hooks/firestore";
 
 export default function watch({ session, topRated }) {
   if (!session) {
