@@ -1,17 +1,17 @@
 import { IconButton } from "@material-ui/core";
 import { MoreHoriz, Search, Videocam } from "@material-ui/icons";
+import { useSession } from "next-auth/client";
+import { useCollection } from "react-firebase-hooks/firestore";
 import styled from "styled-components";
-import Contact from "./Contact";
-const contacts = [
-  { src: "https://links.papareact.com/f0p", name: "Jeff Bozes" },
-  { src: "https://links.papareact.com/kxk", name: "Elon Musk" },
-  { src: "https://links.papareact.com/zvy", name: "Bill Gates" },
-  { src: "https://links.papareact.com/snf", name: "Mark Zuckerberg" },
-  { src: "https://links.papareact.com/d0c", name: "Harry Potter" },
-  { src: "https://links.papareact.com/6gg", name: "The Queen" },
-  { src: "https://links.papareact.com/r57", name: "James Bond" },
-];
+import { db } from "../../../firebase";
+import Chat from "../../Chat/Chat";
+
 const Widgets = () => {
+  const [session] = useSession();
+  const userChatRef = db
+    .collection("chats")
+    .where("users", "array-contains", session.user.email);
+  const [chatsSnapshot] = useCollection(userChatRef);
   return (
     <Container>
       <WidgetHeader>
@@ -28,8 +28,9 @@ const Widgets = () => {
           </IconButton>
         </Icons>
       </WidgetHeader>
-      {contacts.map((contact, index) => (
-        <Contact key={index} name={contact.name} src={contact.src} />
+
+      {chatsSnapshot?.docs.map((chat) => (
+        <Chat key={chat.id} id={chat.id} users={chat.data().users} />
       ))}
     </Container>
   );

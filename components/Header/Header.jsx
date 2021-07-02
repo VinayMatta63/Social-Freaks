@@ -55,13 +55,13 @@ const Header = () => {
             </IconContainer>
           </Tooltip>
         </Link>
-        <Link href={"/"}>
+        {/* <Link href={"/"}>
           <Tooltip title="Friends" arrow>
             <IconContainer active={active === "/flag"}>
               <Person style={{ fontSize: "25px" }} />
             </IconContainer>
           </Tooltip>
-        </Link>
+        </Link> */}
         <Link href={"/watch"}>
           <Tooltip title="Watch" arrow>
             <IconContainer active={active === "/watch"}>
@@ -124,7 +124,7 @@ const Header = () => {
               </ListItemIcon>
               <ListItemText primary="Home" onClick={() => router.push("/")} />
             </ListItem>
-            <ListItem button>
+            {/* <ListItem button>
               <ListItemIcon>
                 <Person />
               </ListItemIcon>
@@ -132,7 +132,7 @@ const Header = () => {
                 primary="Friends"
                 onClick={() => router.push("/")}
               />
-            </ListItem>
+            </ListItem> */}
             <ListItem button>
               <ListItemIcon>
                 <Chat />
