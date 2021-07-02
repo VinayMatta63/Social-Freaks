@@ -5,6 +5,7 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import styled from "styled-components";
 import { db } from "../../../firebase";
 import Chat from "../../Chat/Chat";
+import Image from "next/image";
 
 const Widgets = () => {
   const [session] = useSession();
@@ -28,10 +29,15 @@ const Widgets = () => {
           </IconButton>
         </Icons>
       </WidgetHeader>
-
-      {chatsSnapshot?.docs.map((chat) => (
-        <Chat key={chat.id} id={chat.id} users={chat.data().users} />
-      ))}
+      {chatsSnapshot?.docs.length < 1 ? (
+        <Cover>
+          <Image src={"/nothing.svg"} height={150} width={150} layout="fixed" />
+        </Cover>
+      ) : (
+        chatsSnapshot?.docs.map((chat) => (
+          <Chat key={chat.id} id={chat.id} users={chat.data().users} />
+        ))
+      )}
     </Container>
   );
 };
@@ -56,4 +62,11 @@ const WidgetHeader = styled.div`
 const Icons = styled.div`
   display: flex;
   margin-left: 10px;
+`;
+
+const Cover = styled.div`
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
