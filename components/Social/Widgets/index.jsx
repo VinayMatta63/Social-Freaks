@@ -15,7 +15,7 @@ const Widgets = () => {
   return (
     <Container>
       <WidgetHeader>
-        <h2>Contacts</h2>
+        <h2>Friends</h2>
         <Icons>
           <IconButton>
             <Videocam style={{ color: "#3fb497" }} />
@@ -39,6 +39,9 @@ export default Widgets;
 
 const Container = styled.div`
   flex: 0.2;
+  position: fixed;
+  right: 0;
+  margin-top: 45px;
   @media (max-width: 768px) {
     display: none;
   }

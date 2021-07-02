@@ -16,7 +16,6 @@ import Login from "../../components/Login";
 import Home from "../../components/Shop/Home";
 import { db } from "../../firebase";
 import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
-import { useCollection } from "react-firebase-hooks/firestore";
 
 export default function watch({ session, products }) {
   const cart = useSelector(selectItems);
@@ -24,19 +23,6 @@ export default function watch({ session, products }) {
   const [open, setOpen] = useState(cart.length > 0 ? true : false);
   if (!session) {
     return <Login />;
-  }
-  const [usersSnapshot] = useCollection(db.collection("users"));
-  if (
-    !(
-      usersSnapshot &&
-      usersSnapshot.docs
-        .map((user) => user.data().email)
-        .includes(session.user.email)
-    )
-  ) {
-    db.collection("users")
-      .doc(session.user.email)
-      .set({ ...session.user });
   }
 
   return (
@@ -95,7 +81,18 @@ export default function watch({ session, products }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-
+  if (
+    session &&
+    !(
+      await (
+        await db.collection("users").get()
+      ).docs.map((user) => user.data().email)
+    ).includes(session.user.email)
+  ) {
+    db.collection("users")
+      .doc(session.user.email)
+      .set({ ...session.user });
+  }
   const products = await fetch("https://fakestoreapi.com/products").then(
     (res) => res.json()
   );
