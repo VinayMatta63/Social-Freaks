@@ -176,8 +176,8 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   padding: 20px;
+  margin-top: 20px;
   border-bottom: 1px solid lightgray;
-  position: sticky;
 `;
 
 const HeaderInfo = styled.div`

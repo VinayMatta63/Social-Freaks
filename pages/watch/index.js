@@ -7,25 +7,12 @@ import HomeScreen from "../../components/Watch/HomeScreen/HomeScreen";
 import { db } from "../../firebase";
 import axios from "../../helpers/axios";
 import requests from "../../helpers/Request";
-import { useCollection } from "react-firebase-hooks/firestore";
 
 export default function watch({ session, topRated }) {
   if (!session) {
     return <Login />;
   }
-  const [usersSnapshot] = useCollection(db.collection("users"));
-  if (
-    !(
-      usersSnapshot &&
-      usersSnapshot.docs
-        .map((user) => user.data().email)
-        .includes(session.user.email)
-    )
-  ) {
-    db.collection("users")
-      .doc(session.user.email)
-      .set({ ...session.user });
-  }
+
   return (
     <Container>
       <Head>
@@ -46,7 +33,18 @@ export default function watch({ session, topRated }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-
+  if (
+    session &&
+    !(
+      await (
+        await db.collection("users").get()
+      ).docs.map((user) => user.data().email)
+    ).includes(session.user.email)
+  ) {
+    db.collection("users")
+      .doc(session.user.email)
+      .set({ ...session.user });
+  }
   const request = await axios.get(requests.fetchTopRated);
   const topRated = request.data.results;
   return { props: { session, topRated } };

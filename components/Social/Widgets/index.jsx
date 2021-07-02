@@ -15,7 +15,7 @@ const Widgets = () => {
   return (
     <Container>
       <WidgetHeader>
-        <h2>Contacts</h2>
+        <h2>Friends</h2>
         <Icons>
           <IconButton>
             <Videocam style={{ color: "#3fb497" }} />
