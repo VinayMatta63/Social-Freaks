@@ -19,7 +19,7 @@ const Sidebar = () => {
     <Container>
       <Row src={session.user.image} title={session.user.name} href="/" />
       <Row Icon={Home} title="Home" href="/" />
-      <Row Icon={Person} title="Friends" href="/" />
+      {/* <Row Icon={Person} title="Friends" href="/" /> */}
       <Row Icon={ShoppingBasketOutlined} title="Shop" href="/shop" />
       <Row Icon={Computer} title="Watch" href="/watch" />
       <Row Icon={Message} title="Chat" href="/chat" />
