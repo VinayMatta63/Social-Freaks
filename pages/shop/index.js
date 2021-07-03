@@ -107,7 +107,7 @@ const Container = styled.div`
 
 const Main = styled.div`
   display: flex;
-  margin-top: 40px;
+  margin-top: 80px;
   justify-content: space-between;
 `;
 const ButtonContainer = styled.div`
