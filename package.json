@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
@@ -34,5 +35,6 @@
     "react-swift-slider": "^7.0.1",
     "stripe": "^8.154.0",
     "styled-components": "^5.3.0"
-  }
+  },
+  "devDependencies": {}
 }

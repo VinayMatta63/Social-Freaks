@@ -17,7 +17,7 @@ import Home from "../../components/Shop/Home";
 import { db } from "../../firebase";
 import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
 
-export default function watch({ session, products }) {
+export default function Watch({ session, products }) {
   const cart = useSelector(selectItems);
   const router = useRouter();
   const [open, setOpen] = useState(cart.length > 0 ? true : false);
