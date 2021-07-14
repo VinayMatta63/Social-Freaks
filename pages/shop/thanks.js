@@ -17,9 +17,9 @@ import Home from "../../components/Shop/Home";
 import Thanks from "../../components/Shop/Thanks/Thanks";
 import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
 
-export default function Thanks() {
+export default function ThanksPage() {
   const cart = useSelector(selectItems);
-  const session = useSession();
+  const [session] = useSession();
   const router = useRouter();
   const [open, setOpen] = useState(cart.length > 0 ? true : false);
   if (!session) {

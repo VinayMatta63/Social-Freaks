@@ -5,8 +5,8 @@ import Header from "../../components/Header/Header";
 import Login from "../../components/Login";
 import Checkout from "../../components/Shop/Checkout";
 
-export default function Checkout() {
-  const session = useSession();
+export default function CheckoutPage() {
+  const [session] = useSession();
   if (!session) {
     return <Login />;
   }
