@@ -11,7 +11,7 @@ import Login from "../../components/Login";
 import Orders from "../../components/Shop/Orders/Orders";
 import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
 
-export default function Orders() {
+export default function OrdersPage() {
   const cart = useSelector(selectItems);
   const [session] = useSession();
   const router = useRouter();

@@ -18,7 +18,7 @@ import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
-export default function Payment() {
+export default function PaymentPage() {
   const promise = loadStripe(
     "pk_test_51IOJ4cDP76eqBtD9D8VjGv83h0TTcmskTiWGZhh2zVRg55rAO9MMF125blH0Tt8XDTD91F2CeCAkpeNCon33x72z00pigpbVtS"
   );
