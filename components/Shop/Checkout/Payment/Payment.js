@@ -36,6 +36,9 @@ const Payment = () => {
       const response = await axios({
         method: "post",
         url: `/api/server?total=${cartTotal(cart) * 100}`,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
       });
       setClientSecret(response.data.clientSecret);
     };

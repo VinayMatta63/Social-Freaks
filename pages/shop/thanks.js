@@ -19,7 +19,7 @@ import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
 
 export default function ThanksPage() {
   const cart = useSelector(selectItems);
-  const session = useSession();
+  const [session] = useSession();
   const router = useRouter();
   const [open, setOpen] = useState(cart.length > 0 ? true : false);
   if (!session) {

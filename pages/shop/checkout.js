@@ -6,7 +6,7 @@ import Login from "../../components/Login";
 import Checkout from "../../components/Shop/Checkout";
 
 export default function CheckoutPage() {
-  const session = useSession();
+  const [session] = useSession();
   if (!session) {
     return <Login />;
   }
