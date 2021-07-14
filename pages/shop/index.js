@@ -5,7 +5,7 @@ import {
   ShoppingCart,
   History,
 } from "@material-ui/icons";
-import { getSession } from "next-auth/client";
+import { getSession, useSession } from "next-auth/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -17,12 +17,28 @@ import Home from "../../components/Shop/Home";
 import { db } from "../../firebase";
 import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
 
-export default function Watch({ session, products }) {
+const setUser = async (session) => {
+  if (
+    !(await db.collection("users").get()).docs
+      .map((user) => user.data().email)
+      .includes(session.user.email)
+  ) {
+    await db
+      .collection("users")
+      .doc(session.user.email)
+      .set({ ...session.user });
+  }
+};
+
+export default function Shop({ products }) {
+  const [session] = useSession();
   const cart = useSelector(selectItems);
   const router = useRouter();
   const [open, setOpen] = useState(cart.length > 0 ? true : false);
   if (!session) {
     return <Login />;
+  } else {
+    setUser(session);
   }
 
   return (
@@ -80,24 +96,11 @@ export default function Watch({ session, products }) {
 }
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context);
-  if (
-    session &&
-    !(
-      await (
-        await db.collection("users").get()
-      ).docs.map((user) => user.data().email)
-    ).includes(session.user.email)
-  ) {
-    db.collection("users")
-      .doc(session.user.email)
-      .set({ ...session.user });
-  }
   const products = await fetch("https://fakestoreapi.com/products").then(
     (res) => res.json()
   );
 
-  return { props: { session, products } };
+  return { props: { products } };
 }
 
 const Container = styled.div`

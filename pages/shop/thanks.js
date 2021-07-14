@@ -5,7 +5,7 @@ import {
   History,
   ShoppingCart,
 } from "@material-ui/icons";
-import { getSession } from "next-auth/client";
+import { getSession, useSession } from "next-auth/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -17,8 +17,9 @@ import Home from "../../components/Shop/Home";
 import Thanks from "../../components/Shop/Thanks/Thanks";
 import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
 
-export default function watch({ session }) {
+export default function Thanks() {
   const cart = useSelector(selectItems);
+  const session = useSession();
   const router = useRouter();
   const [open, setOpen] = useState(cart.length > 0 ? true : false);
   if (!session) {
@@ -76,12 +77,6 @@ export default function watch({ session }) {
       </Main>
     </Container>
   );
-}
-
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-
-  return { props: { session } };
 }
 
 const Container = styled.div`

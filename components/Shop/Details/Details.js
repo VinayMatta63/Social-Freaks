@@ -50,7 +50,6 @@ const Details = () => {
           Quantity:
           <Input
             type="number"
-            defaultValue={1}
             min={1}
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}

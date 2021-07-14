@@ -1,4 +1,4 @@
-import { getSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
 import dynamic from "next/dynamic";
 
 const ChatScreen = dynamic(() => import("../../components/Chat/ChatScreen"), {
@@ -12,7 +12,8 @@ import Header from "../../components/Header/Header";
 import Login from "../../components/Login";
 import { db } from "../../firebase";
 import getRecipientEmail from "../../helpers/getRecipientEmail";
-const Chat = ({ session, messages, chat }) => {
+const Chat = ({ messages, chat }) => {
+  const [session] = useSession();
   if (!session) {
     return <Login />;
   }
@@ -40,7 +41,6 @@ const Chat = ({ session, messages, chat }) => {
 export default Chat;
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context);
   const ref = db.collection("chats").doc(context.query.id);
   const messagesRes = await ref
     .collection("messages")
@@ -60,7 +60,7 @@ export async function getServerSideProps(context) {
     id: chatRes.id,
     ...chatRes.data(),
   };
-  return { props: { session, messages: JSON.stringify(messages), chat: chat } };
+  return { props: { messages: JSON.stringify(messages), chat: chat } };
 }
 const Container = styled.div`
   overflow: hidden;

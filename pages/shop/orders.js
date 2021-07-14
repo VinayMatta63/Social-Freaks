@@ -1,6 +1,6 @@
 import { Fab, IconButton } from "@material-ui/core";
 import { ArrowLeft, ArrowRight, ShoppingCart } from "@material-ui/icons";
-import { getSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -11,10 +11,12 @@ import Login from "../../components/Login";
 import Orders from "../../components/Shop/Orders/Orders";
 import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
 
-export default function orders({ session }) {
+export default function Orders() {
   const cart = useSelector(selectItems);
+  const [session] = useSession();
   const router = useRouter();
   const [open, setOpen] = useState(cart.length > 0 ? true : false);
+
   if (!session) {
     return <Login />;
   }
@@ -62,12 +64,6 @@ export default function orders({ session }) {
       </Main>
     </Container>
   );
-}
-
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-
-  return { props: { session } };
 }
 
 const Container = styled.div`

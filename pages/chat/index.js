@@ -1,15 +1,29 @@
-import { getSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
 import Head from "next/head";
 import styled from "styled-components";
 import Sidebar from "../../components/Chat/Sidebar";
 import Header from "../../components/Header/Header";
 import Login from "../../components/Login";
 import { db } from "../../firebase";
-import { useCollection } from "react-firebase-hooks/firestore";
 
-export default function Chat({ session }) {
+const setUser = async (session) => {
+  if (
+    !(await db.collection("users").get()).docs
+      .map((user) => user.data().email)
+      .includes(session.user.email)
+  ) {
+    await db
+      .collection("users")
+      .doc(session.user.email)
+      .set({ ...session.user });
+  }
+};
+export default function Chat() {
+  const [session] = useSession();
   if (!session) {
     return <Login />;
+  } else {
+    setUser(session);
   }
 
   return (
@@ -28,23 +42,6 @@ export default function Chat({ session }) {
       </Main>
     </Container>
   );
-}
-
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-  if (
-    session &&
-    !(
-      await (
-        await db.collection("users").get()
-      ).docs.map((user) => user.data().email)
-    ).includes(session.user.email)
-  ) {
-    db.collection("users")
-      .doc(session.user.email)
-      .set({ ...session.user });
-  }
-  return { props: { session } };
 }
 
 const Container = styled.div`
