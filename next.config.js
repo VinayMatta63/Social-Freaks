@@ -20,11 +20,10 @@ module.exports = withPWA({
   pwa: {
     dest: "public",
     register: true,
-    // skipWaiting: true,
+    // disable: true,
+    skipWaiting: true,
   },
   eslint: {
-    // Warning: Dangerously allow production builds to successfully complete even if
-    // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
 });

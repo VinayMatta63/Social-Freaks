@@ -5,7 +5,7 @@ import {
   History,
   ShoppingCart,
 } from "@material-ui/icons";
-import { getSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -16,7 +16,8 @@ import Login from "../../components/Login";
 import Details from "../../components/Shop/Details/Details";
 import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
 
-export default function details({ session }) {
+export default function DetailsPage() {
+  const [session] = useSession();
   const cart = useSelector(selectItems);
   const router = useRouter();
   const [open, setOpen] = useState(cart.length > 0 ? true : false);
@@ -75,12 +76,6 @@ export default function details({ session }) {
       </Main>
     </Container>
   );
-}
-
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-
-  return { props: { session } };
 }
 
 const Container = styled.div`

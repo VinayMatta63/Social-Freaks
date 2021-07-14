@@ -5,7 +5,7 @@ import {
   History,
   ShoppingCart,
 } from "@material-ui/icons";
-import { getSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -18,10 +18,11 @@ import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
-export default function watch({ session }) {
+export default function Payment() {
   const promise = loadStripe(
     "pk_test_51IOJ4cDP76eqBtD9D8VjGv83h0TTcmskTiWGZhh2zVRg55rAO9MMF125blH0Tt8XDTD91F2CeCAkpeNCon33x72z00pigpbVtS"
   );
+  const [session] = useSession();
   const cart = useSelector(selectItems);
   const router = useRouter();
   const [open, setOpen] = useState(cart.length > 0 ? true : false);
@@ -82,12 +83,6 @@ export default function watch({ session }) {
       </Main>
     </Container>
   );
-}
-
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-
-  return { props: { session } };
 }
 
 const Container = styled.div`
