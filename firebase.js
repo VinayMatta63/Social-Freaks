@@ -1,6 +1,8 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/firestore";
 import "firebase/storage";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
   apiKey: "AIzaSyDsUnytM9TcgLQQG2Jt9MDETXtjeasuiho",
   authDomain: "social-freaks-3201.firebaseapp.com",
@@ -17,7 +19,7 @@ if (!firebase.apps.length) {
 } else {
   app = firebase.app(); // if already initialized, use that one
 }
-
+const tStamp = firebase.firestore.FieldValue.serverTimestamp();
 const db = app.firestore();
 const storage = firebase.storage();
-export { db, storage };
+export { db, storage, tStamp };

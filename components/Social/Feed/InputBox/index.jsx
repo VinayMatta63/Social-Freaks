@@ -3,7 +3,7 @@ import { useSession } from "next-auth/client";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import firebase from "firebase";
+// import firebase from "firebase/app";
 import { db, storage } from "../../../../firebase";
 import { Menu, MenuItem, Tooltip } from "@material-ui/core";
 import { activityArray } from "./activity";
@@ -39,7 +39,7 @@ const InputBox = () => {
         image: session.user.image,
         message: inputRef.current.value ? inputRef.current.value : "",
         activity: activity ? activity : "",
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        timestamp: tStamp,
       })
       .then((doc) => {
         if (activity) {

@@ -4,20 +4,8 @@ import styled from "styled-components";
 import Sidebar from "../../components/Chat/Sidebar";
 import Header from "../../components/Header/Header";
 import Login from "../../components/Login";
-import { db } from "../../firebase";
+import setUser from "../../helpers/setUser";
 
-const setUser = async (session) => {
-  if (
-    !(await db.collection("users").get()).docs
-      .map((user) => user.data().email)
-      .includes(session.user.email)
-  ) {
-    await db
-      .collection("users")
-      .doc(session.user.email)
-      .set({ ...session.user });
-  }
-};
 export default function Chat() {
   const [session] = useSession();
   if (!session) {

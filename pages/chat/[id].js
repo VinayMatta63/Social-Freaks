@@ -12,10 +12,13 @@ import Header from "../../components/Header/Header";
 import Login from "../../components/Login";
 import { db } from "../../firebase";
 import getRecipientEmail from "../../helpers/getRecipientEmail";
+import setUser from "../../helpers/setUser";
 const Chat = ({ messages, chat }) => {
   const [session] = useSession();
   if (!session) {
     return <Login />;
+  } else {
+    setUser(session);
   }
   return (
     <Container>

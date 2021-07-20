@@ -1,15 +1,25 @@
 import { Fab, IconButton } from "@material-ui/core";
 import { ArrowLeft, ArrowRight, ShoppingCart } from "@material-ui/icons";
 import { useSession } from "next-auth/client";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import Header from "../../components/Header/Header";
-import Login from "../../components/Login";
-import Orders from "../../components/Shop/Orders/Orders";
+// import Header from "../../components/Header/Header";
+// import Login from "../../components/Login";
+// import Orders from "../../components/Shop/Orders/Orders";
 import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
+const Orders = dynamic(() => import("../../components/Shop/Orders/Orders"), {
+  ssr: false,
+});
+const Login = dynamic(() => import("../../components/Login"), {
+  ssr: false,
+});
+const Header = dynamic(() => import("../../components/Header/Header"), {
+  ssr: false,
+});
 
 export default function OrdersPage() {
   const cart = useSelector(selectItems);

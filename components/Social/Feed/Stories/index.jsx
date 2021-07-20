@@ -2,9 +2,9 @@ import { AddCircleOutline, Send } from "@material-ui/icons";
 import { useSession } from "next-auth/client";
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import { db, storage } from "../../../../firebase";
+import { db, storage, tStamp } from "../../../../firebase";
 import StoryCard from "./StoryCard";
-import firebase from "firebase";
+// import firebase from "firebase/app";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { CircularProgress, IconButton } from "@material-ui/core";
 
@@ -28,7 +28,7 @@ const Stories = () => {
         name: session.user.name,
         email: session.user.email,
         image: session.user.image,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        timestamp: tStamp,
         type: statusType,
       })
       .then((doc) => {
