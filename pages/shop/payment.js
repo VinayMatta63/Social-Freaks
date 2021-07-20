@@ -11,12 +11,25 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import Header from "../../components/Header/Header";
-import Login from "../../components/Login";
-import Payment from "../../components/Shop/Checkout/Payment/Payment";
+// import Header from "../../components/Header/Header";
+// import Login from "../../components/Login";
+// import Payment from "../../components/Shop/Checkout/Payment/Payment";
 import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import dynamic from "next/dynamic";
+const Payment = dynamic(
+  () => import("../../components/Shop/Checkout/Payment/Payment"),
+  {
+    ssr: false,
+  }
+);
+const Login = dynamic(() => import("../../components/Login"), {
+  ssr: false,
+});
+const Header = dynamic(() => import("../../components/Header/Header"), {
+  ssr: false,
+});
 
 export default function PaymentPage() {
   const promise = loadStripe(

@@ -5,17 +5,27 @@ import {
   History,
   ShoppingCart,
 } from "@material-ui/icons";
-import { getSession, useSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import Header from "../../components/Header/Header";
-import Login from "../../components/Login";
-import Home from "../../components/Shop/Home";
-import Thanks from "../../components/Shop/Thanks/Thanks";
+// import Header from "../../components/Header/Header";
+// import Login from "../../components/Login";
+// import Home from "../../components/Shop/Home";
+// import Thanks from "../../components/Shop/Thanks/Thanks";
 import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
+const Thanks = dynamic(() => import("../../components/Shop/Thanks/Thanks"), {
+  ssr: false,
+});
+const Login = dynamic(() => import("../../components/Login"), {
+  ssr: false,
+});
+const Header = dynamic(() => import("../../components/Header/Header"), {
+  ssr: false,
+});
 
 export default function ThanksPage() {
   const cart = useSelector(selectItems);

@@ -75,7 +75,7 @@ const CommentComponent = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary" autofocus>
+          <Button onClick={handleClose} color="primary" autoFocus>
             Cancel
           </Button>
           <Button onClick={deleteComment} color="primary">

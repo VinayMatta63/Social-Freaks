@@ -1,25 +1,26 @@
-import { getSession, useSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import styled from "styled-components";
-import Header from "../../components/Header/Header";
-import Login from "../../components/Login";
-import HomeScreen from "../../components/Watch/HomeScreen/HomeScreen";
-import { db } from "../../firebase";
+// import Header from "../../components/Header/Header";
+// import Login from "../../components/Login";
+// import HomeScreen from "../../components/Watch/HomeScreen/HomeScreen";
 import axios from "../../helpers/axios";
 import requests from "../../helpers/Request";
-
-const setUser = async (session) => {
-  if (
-    !(await db.collection("users").get()).docs
-      .map((user) => user.data().email)
-      .includes(session.user.email)
-  ) {
-    await db
-      .collection("users")
-      .doc(session.user.email)
-      .set({ ...session.user });
+import setUser from "../../helpers/setUser";
+const HomeScreen = dynamic(
+  () => import("../../components/Watch/HomeScreen/HomeScreen"),
+  {
+    ssr: false,
   }
-};
+);
+const Login = dynamic(() => import("../../components/Login"), {
+  ssr: false,
+});
+const Header = dynamic(() => import("../../components/Header/Header"), {
+  ssr: false,
+});
+
 export default function Watch({ topRated }) {
   const [session] = useSession();
   if (!session) {

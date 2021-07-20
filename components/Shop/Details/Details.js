@@ -1,6 +1,6 @@
 import { Rating } from "@material-ui/lab";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { selectProduct } from "../../../helpers/slices/detailsSlice";
@@ -42,8 +42,8 @@ const Details = () => {
           <Rating name="read-only" value={product.rating} readOnly />
         </p>
         <DetailsArray>
-          {product.details?.map((detail) => (
-            <p>-{detail}</p>
+          {product.details?.map((detail, index) => (
+            <p key={index}>-{detail}</p>
           ))}
         </DetailsArray>
         <Quantity>

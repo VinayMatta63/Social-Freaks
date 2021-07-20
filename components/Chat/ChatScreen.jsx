@@ -7,7 +7,7 @@ import SpeechRecognition, {
 import { useEffect, useState } from "react";
 import { Avatar, IconButton, Modal, Tooltip } from "@material-ui/core";
 import Picker from "emoji-picker-react";
-import firebase from "firebase";
+// import firebase from "firebase";
 import {
   AttachFile,
   InsertEmoticon,
@@ -17,7 +17,7 @@ import {
 } from "@material-ui/icons";
 import Link from "next/link";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { db } from "../../firebase";
+import { db, tStamp } from "../../firebase";
 import Message from "./Message";
 import getRecipientEmail from "../../helpers/getRecipientEmail";
 
@@ -73,7 +73,7 @@ const ChatScreen = ({ chat, messages }) => {
     //     { merge: true }
     //   );
     db.collection("chats").doc(router.query.id).collection("messages").add({
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      timestamp: tStamp,
       message: input,
       user: session.user.email,
       profile: session.user.image,

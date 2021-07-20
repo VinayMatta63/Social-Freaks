@@ -18,7 +18,9 @@ const Orders = () => {
           orderList.docs
             .filter((order) => order.data().email === session.user.email)
             .map((order) => {
-              return <Order id={order.id} order={order.data()} />;
+              return (
+                <Order key={order.id} id={order.id} order={order.data()} />
+              );
             })}
       </div>
     </Container>

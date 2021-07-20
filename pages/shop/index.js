@@ -5,30 +5,24 @@ import {
   ShoppingCart,
   History,
 } from "@material-ui/icons";
-import { getSession, useSession } from "next-auth/client";
+import { useSession } from "next-auth/client";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import Header from "../../components/Header/Header";
-import Login from "../../components/Login";
-import Home from "../../components/Shop/Home";
-import { db } from "../../firebase";
+const Home = dynamic(() => import("../../components/Shop/Home"), {
+  ssr: false,
+});
+const Login = dynamic(() => import("../../components/Login"), {
+  ssr: false,
+});
+const Header = dynamic(() => import("../../components/Header/Header"), {
+  ssr: false,
+});
+import setUser from "../../helpers/setUser";
 import { cartSum, selectItems } from "../../helpers/slices/cartSlice";
-
-const setUser = async (session) => {
-  if (
-    !(await db.collection("users").get()).docs
-      .map((user) => user.data().email)
-      .includes(session.user.email)
-  ) {
-    await db
-      .collection("users")
-      .doc(session.user.email)
-      .set({ ...session.user });
-  }
-};
 
 export default function Shop({ products }) {
   const [session] = useSession();

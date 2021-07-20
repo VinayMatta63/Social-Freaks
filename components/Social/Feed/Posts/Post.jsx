@@ -4,8 +4,8 @@ import { useSession } from "next-auth/client";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import { db } from "../../../../firebase";
-import firebase from "firebase";
+import { db, tStamp } from "../../../../firebase";
+// import firebase from "firebase/app";
 import CommentComponent from "./CommentComponent";
 import { useCollection } from "react-firebase-hooks/firestore";
 import Button from "@material-ui/core/Button";
@@ -71,7 +71,7 @@ const Post = ({
       email: session.user.email,
       image: session.user.image,
       comment: commentRef.current.value,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      timestamp: tStamp,
     });
     commentRef.current.value = "";
   };
@@ -189,7 +189,7 @@ const Post = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary" autofocus>
+          <Button onClick={handleClose} color="primary" autoFocus>
             Cancel
           </Button>
           <Button onClick={deletePost} color="primary">
