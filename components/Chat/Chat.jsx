@@ -5,12 +5,16 @@ import { db } from "../../firebase";
 import { useRouter } from "next/router";
 import getRecipientEmail from "../../helpers/getRecipientEmail";
 import { useSession } from "next-auth/client";
+import { useState } from "react";
+import { collection, getDocs, query } from "firebase/firestore";
 
 const Chat = ({ id, users }) => {
   const router = useRouter();
   const [session] = useSession();
-
-  const [recipientSnapshot] = useCollection(db.collection("users"));
+  const [recipientSnapshot, setSnapshot] = useState();
+  const q = query(collection(db, "users"));
+  getDocs(q).then((doc) => setSnapshot(doc));
+  // const [recipientSnapshot] = useCollection(db.collection("users"));
   const enterChat = () => {
     router.push(`/chat/${id}`);
   };

@@ -5,8 +5,9 @@ import styled from "styled-components";
 import { db, storage, tStamp } from "../../../../firebase";
 import StoryCard from "./StoryCard";
 // import firebase from "firebase/app";
-import { useCollection } from "react-firebase-hooks/firestore";
+// import { useCollection } from "react-firebase-hooks/firestore";
 import { CircularProgress, IconButton } from "@material-ui/core";
+import { query, collection, orderBy, getDocs } from "firebase/firestore";
 
 const Stories = () => {
   const statusRef = useRef();
@@ -14,9 +15,14 @@ const Stories = () => {
   const [status, setStatus] = useState(null);
   const [statusType, setStatusType] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [storiesList] = useCollection(
-    db.collection("status").orderBy("timestamp", "desc")
-  );
+  const [storiesList, setStoriesList] = useState(null);
+  // const [storiesList] = useCollection(
+  //   db.collection("status").orderBy("timestamp", "desc")
+  // );
+  const q = query(collection(db, "status"), orderBy("timestamp", "desc"));
+  getDocs(q).then((res) => {
+    setStoriesList(res);
+  });
 
   const sendStory = async (e) => {
     e.preventDefault();
@@ -137,7 +143,6 @@ const Container = styled.div`
   display: flex;
   overflow-x: scroll;
   overflow-y: hidden;
-
   padding-bottom: 5px;
 `;
 

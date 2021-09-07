@@ -1,6 +1,8 @@
-import firebase from "firebase/app";
-import "firebase/firestore";
-import "firebase/storage";
+import firebase from "firebase/compat/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { getFirestore, serverTimestamp } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 const firebaseConfig = {
@@ -14,12 +16,13 @@ const firebaseConfig = {
 };
 
 let app = null;
-if (!firebase.apps.length) {
-  app = firebase.initializeApp(firebaseConfig);
-} else {
-  app = firebase.app(); // if already initialized, use that one
-}
-const tStamp = firebase.firestore.FieldValue.serverTimestamp();
-const db = app.firestore();
-const storage = firebase.storage();
+// if (!getApps()) {
+app = initializeApp(firebaseConfig);
+// app = firebase.initializeApp(firebaseConfig);
+// } else {
+// app = getApp(); // if already initialized, use that one
+// }
+const tStamp = serverTimestamp();
+const db = getFirestore(app);
+const storage = getStorage();
 export { db, storage, tStamp };
