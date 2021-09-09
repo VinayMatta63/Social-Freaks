@@ -1,34 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Technologies Used
 
-First, run the development server:
+Next.js
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Styled Components
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Stripe Payments
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Firebase
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Others
+Next-Auth
+TMDB and Fake Store API
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Deploy
+Vercel
 
-## Learn More
+## Detail
+This is basically a facebook like Social Media App with features such as status images, photo and video sharing, etc. with additional elements like a video playing platform which uses TMDB Api to fetch movie trailers from youtube and then embed them on screen if needed. Other than this, there's also a shopping platform which uses fake store api and Stripe Payments to attain full e-commerce funtionality. Last but not least there is a chatting platform where we can chat with anyone if we know their e-mail. 
 
-To learn more about Next.js, take a look at the following resources:
+Firebase has been used for storage and real-time database. This Project is also a Progressive Web App so it can be installed on mobile devices and con work offline after configuration. 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployed version
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+https://social-freaks.vercel.app/
