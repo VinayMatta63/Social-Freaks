@@ -11,6 +11,7 @@ Firebase
 
 ## Others
 Next-Auth
+
 TMDB and Fake Store API
 
 ## Deploy
