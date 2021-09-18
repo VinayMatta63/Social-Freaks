@@ -3,3 +3,4 @@
   publish = "out"
 [functions]
   node_bundler = "esbuild"
+  external_node_modules = ["next", "require_optional", "typeorm", "app-root-path", "@ampproject/toolbox-optimizer", "sharp"]
