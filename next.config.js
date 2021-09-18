@@ -28,5 +28,5 @@ module.exports = withPWA({
   //   ignoreDuringBuilds: true,
   // },
 
-  target: "serverless",
+  target: "experimental-serverless-trace",
 });
