@@ -27,17 +27,6 @@ module.exports = withPWA({
   // eslint: {
   //   ignoreDuringBuilds: true,
   // },
-  externals: [
-    "mssql",
-    "mysql2",
-    "oracle",
-    "oracledb",
-    "postgres",
-    "redshift",
-    "sqlite3",
-    "pg",
-    "pg-query-stream",
-    "tedious",
-  ],
+
   target: "serverless",
 });
