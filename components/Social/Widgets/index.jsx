@@ -1,18 +1,24 @@
 import { IconButton } from "@material-ui/core";
 import { MoreHoriz, Search, Videocam } from "@material-ui/icons";
 import { useSession } from "next-auth/client";
-import { useCollection } from "react-firebase-hooks/firestore";
+// import { useCollection } from "react-firebase-hooks/firestore";
 import styled from "styled-components";
 import { db } from "../../../firebase";
 import Chat from "../../Chat/Chat";
 import Image from "next/image";
+import { useState } from "react";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 const Widgets = () => {
   const [session] = useSession();
-  const userChatRef = db
-    .collection("chats")
-    .where("users", "array-contains", session.user.email);
-  const [chatsSnapshot] = useCollection(userChatRef);
+  const [chatsSnapshot, setUserChats] = useState();
+  const q = query(
+    collection(db, "chats"),
+    where("users", "array-contains", session.user.email)
+  );
+  getDocs(q).then((docs) => setUserChats(docs));
+  // db.collection("chats").where("users", "array-contains", session.user.email);
+  // const [chatsSnapshot] = useCollection(userChatRef);
   return (
     <Container>
       <WidgetHeader>

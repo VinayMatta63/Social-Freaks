@@ -1,15 +1,13 @@
+import { collection, doc, getDocs, query, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 const setUser = async (session) => {
+  const q = query(collection(db, "users"));
+  const userList = await getDocs(q).docs;
   if (
-    !(await db.collection("users").get()).docs
-      .map((user) => user.data().email)
-      .includes(session.user.email)
+    !userList?.map((user) => user.data().email).includes(session.user.email)
   ) {
-    await db
-      .collection("users")
-      .doc(session.user.email)
-      .set({ ...session.user });
+    await setDoc(doc(q, session.user.email), { ...session.user });
   }
 };
 

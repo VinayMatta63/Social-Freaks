@@ -1,12 +1,19 @@
-import { useCollection } from "react-firebase-hooks/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { useState } from "react";
+// import { useCollection } from "react-firebase-hooks/firestore";
 import styled from "styled-components";
 import { db } from "../../../../firebase";
 import Post from "./Post";
 
 const Posts = ({ posts }) => {
-  const [newPosts] = useCollection(
-    db.collection("posts").orderBy("timestamp", "desc")
-  );
+  const [newPosts, setNewPosts] = useState(null);
+  const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
+  getDocs(q).then((res) => {
+    setNewPosts(res);
+  });
+  // const [newPosts] = useCollection(
+  //   db.collection("posts").orderBy("timestamp", "desc")
+  // );
   return (
     <Container>
       {newPosts

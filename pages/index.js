@@ -2,9 +2,10 @@ import { getSession } from "next-auth/client";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import styled from "styled-components";
+import { query, collection, orderBy, getDocs } from "firebase/firestore";
 // import Feed from "../components/Social/Feed";
-// import Header from "../components/Header/Header";
-import Login from "../components/Login";
+import Header from "../components/Header/Header";
+// import Login from "../components/Login";
 // import Sidebar from "../components/Social/Sidebar";
 // import Widgets from "../components/Social/Widgets";
 
@@ -19,12 +20,12 @@ const Sidebar = dynamic(() => import("../components/Social/Sidebar"), {
 const Feed = dynamic(() => import("../components/Social/Feed"), {
   // ssr: false,
 });
-// const Login = dynamic(() => import("../components/Login"), {
-//   ssr: false,
-// });
-const Header = dynamic(() => import("../components/Header/Header"), {
+const Login = dynamic(() => import("../components/Login"), {
   ssr: false,
 });
+// const Header = dynamic(() => import("../components/Header/Header"), {
+//   ssr: false,
+// });
 
 export default function Home({ session, posts }) {
   if (!session) {
@@ -55,13 +56,16 @@ export default function Home({ session, posts }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  const posts = await db.collection("posts").orderBy("timestamp", "desc").get();
-  const docs = posts.docs.map((post) => ({
+  const postsRef = collection(db, "posts");
+  const q = query(postsRef, orderBy("timestamp", "desc"));
+  // const posts = await db.collection("posts").orderBy("timestamp", "desc").get();
+  const posts = await getDocs(q);
+  const newPosts = posts.docs.map((post) => ({
     id: post.id,
     ...post.data(),
     timestamp: null,
   }));
-  return { props: { session, posts: docs } };
+  return { props: { session, posts: JSON.parse(JSON.stringify(newPosts)) } };
 }
 
 const Container = styled.div`

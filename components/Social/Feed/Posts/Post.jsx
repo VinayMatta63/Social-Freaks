@@ -14,6 +14,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 
 const Post = ({
   id,
@@ -29,10 +30,24 @@ const Post = ({
   const [session] = useSession();
   const [commentBar, setCommentBar] = useState(false);
   const [open, setOpen] = useState(false);
+  const [likes, setLikes] = useState(null);
+  const [comments, setComments] = useState(null);
 
-  const [likes] = useCollection(
-    db.collection("posts").doc(id).collection("likes")
-  );
+  getDocs(query(collection(db, `posts/${id}/likes`))).then((res) => {
+    setLikes(res);
+  });
+  getDocs(
+    query(collection(db, `posts/${id}/comments`), orderBy("timestamp", "desc"))
+  ).then((res) => {
+    setComments(res);
+  });
+  // const [likes] = useCollection(
+  //   db.collection("posts").doc(id).collection("likes")
+  // );
+  // const docComRef = doc(db, "posts", id);
+  // getDoc(docComRef).then((res) => {
+  //   setComments(res);
+  // });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -56,13 +71,7 @@ const Post = ({
     db.collection("posts").doc(id).delete();
   };
   const commentRef = useRef(null);
-  const [comments] = useCollection(
-    db
-      .collection("posts")
-      .doc(id)
-      .collection("comments")
-      .orderBy("timestamp", "desc")
-  );
+
   const sendComment = (e) => {
     e.preventDefault();
     if (!commentRef.current.value) return;
