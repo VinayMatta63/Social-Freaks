@@ -23,7 +23,19 @@ module.exports = withPWA({
     disable: process.env.NODE_ENV !== "production",
     skipWaiting: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // eslint: {
+  //   ignoreDuringBuilds: true,
+  // },
+  externals: [
+    "mssql",
+    "mysql2",
+    "oracle",
+    "oracledb",
+    "postgres",
+    "redshift",
+    "sqlite3",
+    "pg",
+    "pg-query-stream",
+    "tedious",
+  ],
 });

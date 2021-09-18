@@ -1,5 +1,5 @@
 import { Avatar } from "@material-ui/core";
-import { useCollection } from "react-firebase-hooks/firestore";
+// import { useCollection } from "react-firebase-hooks/firestore";
 import styled from "styled-components";
 import { db } from "../../firebase";
 import { useRouter } from "next/router";
