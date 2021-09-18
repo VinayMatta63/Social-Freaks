@@ -38,4 +38,5 @@ module.exports = withPWA({
     "pg-query-stream",
     "tedious",
   ],
+  target: "serverless",
 });
