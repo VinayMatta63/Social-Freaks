@@ -27,5 +27,5 @@ module.exports = withPWA({
   eslint: {
     ignoreDuringBuilds: true,
   },
-  target: "experimental-serverless-trace",
+  // target: "experimental-serverless-trace",
 });
