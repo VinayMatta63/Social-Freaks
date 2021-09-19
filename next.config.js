@@ -17,7 +17,6 @@ module.exports = withPWA({
       "images.unsplash.com",
     ],
   },
-  target:'experimental-serverless-trace',
   pwa: {
     dest: "public",
     register: true,
